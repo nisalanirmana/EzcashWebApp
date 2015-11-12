@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <!--
+    <property name="hibernate.connection.url">jdbc:mysql://203.189.68.250:3306/cashatm</property>
+    <property name="hibernate.connection.username">hasala</property>
+    <property name="hibernate.connection.password">hasala123</property>
+       -->
+    <!-- 
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/cashatm</property>
+    <property name="hibernate.connection.username">ezatm</property>
+    <property name="hibernate.connection.password">ezatm</property>
+    
+     -->
+      
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ezatm_db</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">root</property>
+ 
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.jdbc.batch_size">20</property>
+    
+    
+    
+    <mapping class="lk.dialoglab.ezcash.domain.Alerts"/>
+    <mapping class="lk.dialoglab.ezcash.domain.AtmReload"/>
+    <mapping class="lk.dialoglab.ezcash.domain.WebUser"/>
+    <mapping class="lk.dialoglab.ezcash.domain.CashOut"/>
+    <mapping class="lk.dialoglab.ezcash.domain.AlertType"/>
+    <mapping class="lk.dialoglab.ezcash.domain.AssignedAtmId"/>
+    <mapping class="lk.dialoglab.ezcash.domain.Atm"/>
+    <mapping class="lk.dialoglab.ezcash.domain.Transactions"/>
+    <mapping class="lk.dialoglab.ezcash.domain.Notes"/>
+    <mapping class="lk.dialoglab.ezcash.domain.UserType"/>
+    <mapping class="lk.dialoglab.ezcash.domain.AtmLocation"/>
+    <mapping class="lk.dialoglab.ezcash.domain.AssignedAtm"/>
+    <mapping class="lk.dialoglab.ezcash.domain.Operator"/>
+    <mapping class="lk.dialoglab.ezcash.domain.Didmap"/>
+  </session-factory>
+</hibernate-configuration>

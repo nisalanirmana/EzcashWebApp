@@ -1,0 +1,40 @@
+package lk.dialoglab.ezcash.service;
+
+import java.util.List;
+
+import lk.dialoglab.ezcash.dao.AlertDAO;
+import lk.dialoglab.ezcash.dao.AtmDAO;
+import lk.dialoglab.ezcash.domain.Alerts;
+import lk.dialoglab.ezcash.domain.Atm;
+import lk.dialoglab.ezcash.util.HibernateUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AlertServiceImpl implements AlertService{
+	
+	@Autowired
+	AlertDAO alertDao;
+	
+	@Override
+	public List<Alerts> getAlerts(){
+		List<Alerts> alerts=null;
+		try {
+			HibernateUtil.beginTransaction();
+	//		alerts = alertDao.findAll(Alerts.class);
+			alerts = alertDao.getAlerts();
+				
+			HibernateUtil.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+			HibernateUtil.rollbackTransaction();
+
+		}
+
+		return alerts;
+		
+		
+	}
+
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd
+   http://www.springframework.org/schema/mvc 
+   http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+		<!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
+<mvc:annotation-driven />
+
+ <!-- Activates various annotations to be detected in bean classes -->
+ <context:annotation-config />
+		 <!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
+  For example @Controller and @Service. Make sure to set the correct base-package-->
+<context:component-scan base-package="lk.dialoglab.ezcash.controllers" />
+<context:component-scan base-package="lk.dialoglab.ezcash.domain" />
+<context:component-scan base-package="lk.dialoglab.ezcash.dao" />
+<context:component-scan base-package="lk.dialoglab.ezcash.service" />
+<context:component-scan base-package="lk.dialoglab.ezcash.util" />
+
+</beans>

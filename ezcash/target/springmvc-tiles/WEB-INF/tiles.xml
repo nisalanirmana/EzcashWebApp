@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+ 
+<tiles-definitions>
+
+ <definition name="baseLayout" template="/jsp/layout/layout.jsp">
+  <put-attribute name="title"  />
+  <put-attribute name="header" value="/jsp/layout/header.jsp" />
+  <put-attribute name="menu" value="/jsp/layout/common_menu.jsp" />
+  <put-attribute name="navigation" value="/jsp/layout/navigation.jsp" />
+  <put-attribute name="body" value="" />
+  <put-attribute name="footer" value="/jsp/layout/footer.jsp" />
+ </definition>
+ 
+ <definition name="welcome" template="/jsp/layout/layout.jsp">
+  <put-attribute name="title"  />
+  <put-attribute name="header" value="" />
+  <put-attribute name="menu" value="" />
+  <put-attribute name="navigation" value="" />
+  <put-attribute name="body" value="/jsp/welcome.jsp" />
+  <put-attribute name="footer" value="/jsp/layout/footer.jsp" />
+ </definition>
+ 
+ <definition name="system" extends="baseLayout">
+  <put-attribute name="System Overview" />
+
+  <put-attribute name="body" value="/jsp/system.jsp" />
+ </definition>
+ 
+  <definition name="about" extends="baseLayout">
+  <put-attribute name="title" value="about Us" />
+  <put-attribute name="body" value="/jsp/about.jsp" />
+ </definition>
+ 
+   <definition name="alerts" extends="baseLayout">
+  <put-attribute name="title" value="Alerts" />
+  <put-attribute name="body" value="/jsp/alerts.jsp" />
+ </definition>
+ 
+   <definition name="atm" extends="baseLayout">
+  <put-attribute name="title" value="ATM" />
+  <put-attribute name="body" value="/jsp/atm.jsp" />
+ </definition>
+ 
+   <definition name="maintenance" extends="baseLayout">
+  <put-attribute name="title" value="Maintenance" />
+  <put-attribute name="body" value="/jsp/maintenance.jsp" />
+ </definition>
+ 
+   <definition name="operators" extends="baseLayout">
+  <put-attribute name="title" value="Operators" />
+  <put-attribute name="body" value="/jsp/operators.jsp" />
+ </definition>
+ 
+   <definition name="transaction" extends="baseLayout">
+  <put-attribute name="title" value="Transaction" />
+  <put-attribute name="body" value="/jsp/transaction.jsp" />
+ </definition>
+ 
+   <definition name="users" extends="baseLayout">
+  <put-attribute name="title" value="Users" />
+  <put-attribute name="body" value="/jsp/users.jsp" />
+ </definition>
+  
+</tiles-definitions>
