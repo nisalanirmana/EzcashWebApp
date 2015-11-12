@@ -18,6 +18,7 @@ import lk.dialoglab.ezcash.util.HibernateUtil;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,13 +68,24 @@ public class ReloadServiceImpl implements ReloadService {
 	
 	@Override
 	public void deletereloadbyid(AtmReload atmreload) {
-		AtmReload reloadfind = null;
 		try {
 			HibernateUtil.beginTransaction();
 			reloadDao.delete(atmreload);
 			System.out.println("Deleted");	
 			HibernateUtil.commitTransaction();
-		} catch (Exception e) {
+		} 
+		/*
+		catch (ConstraintViolationException ex) {
+		System.out.println("Transaction Table");
+		
+		
+		
+		ex.printStackTrace();
+		HibernateUtil.rollbackTransaction();
+			
+		}
+		*/
+		catch (Exception e) {
 			e.printStackTrace();
 			HibernateUtil.rollbackTransaction();
 		}

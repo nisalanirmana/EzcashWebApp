@@ -36,7 +36,7 @@
  </definition>
  
  <definition name="system" extends="baseLayout">
-  <put-attribute name="System Overview" />
+  <put-attribute name="title" value="Overview" />
   <put-attribute name="body" value="/jsp/system.jsp" />
  </definition>
  

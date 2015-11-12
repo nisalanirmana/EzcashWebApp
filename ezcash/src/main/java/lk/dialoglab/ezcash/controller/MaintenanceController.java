@@ -38,6 +38,8 @@ import java.util.List;
 
 
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -46,10 +48,12 @@ import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.AtmReload;
 import lk.dialoglab.ezcash.domain.Didmap;
 import lk.dialoglab.ezcash.domain.Operator;
+import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.dto.DidmapDto;
 import lk.dialoglab.ezcash.dto.ReloadDto;
 import lk.dialoglab.ezcash.service.DidmapService;
 import lk.dialoglab.ezcash.service.ReloadService;
+import lk.dialoglab.ezcash.service.TransactionService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +87,10 @@ public class MaintenanceController {
 	
 	@Autowired
 	ReloadService reloadService;
+	
+	@Autowired
+	TransactionService transactionService;
+
      
 	private static final Logger logger = LoggerFactory.getLogger(MaintenanceController.class);
      
@@ -245,8 +253,24 @@ public class MaintenanceController {
  	    @RequestMapping("/remove/{id}")
  	    public String removePerson(@PathVariable("id") int id){
  	         AtmReload atmreload = null;
+ 	         Transactions transactions = null;
+ 	        List<Transactions> transactionslist = null;
  	        atmreload = reloadService.findreloadbyid(id);
- 	       reloadService.deletereloadbyid(atmreload);
+ 	        int Transactionid=0;
+ 	        switch(atmreload.getStatus()){
+ 	        case "4":
+ 	        transactionslist=transactionService.getTransactionbyReloadid(id);
+ 	        Transactionid=transactionslist.get(0).getTransactionId();
+ 	        transactions=transactionService.findtransactionbyid(Transactionid);
+ 	        transactionService.deletetransactionbyid(transactions);
+ 	        reloadService.deletereloadbyid(atmreload);
+ 	        System.out.println("Transaction");
+ 	        break;
+ 	        default:
+ 	        	
+ 	        	reloadService.deletereloadbyid(atmreload);
+ 	        }
+ 	       
  	       return  "redirect:/maintenance";
  	    }
  	  

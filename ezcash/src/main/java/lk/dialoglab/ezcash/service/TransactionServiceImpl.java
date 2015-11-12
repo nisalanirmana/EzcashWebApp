@@ -15,10 +15,13 @@ import java.util.List;
 
 
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lk.dialoglab.ezcash.dao.TransactionDAO;
+import lk.dialoglab.ezcash.domain.AtmReload;
 import lk.dialoglab.ezcash.domain.Operator;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.util.HibernateUtil;
@@ -122,4 +125,58 @@ public class TransactionServiceImpl implements TransactionService {
 		
 		
 	}
+	
+	@Override
+	public Transactions findtransactionbyid(int id) {
+		Transactions transactionsfind = null;
+		try {
+			HibernateUtil.beginTransaction();
+			System.out.println("found" + id);	
+			transactionsfind = transactionDao.findByID(Transactions.class,id);
+			
+				
+			HibernateUtil.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+			HibernateUtil.rollbackTransaction();
+		}
+		System.out.println("return" + id);	
+		return transactionsfind;
+	}
+	
+	@Override
+	public void deletetransactionbyid(Transactions transaction) {
+		try {
+			HibernateUtil.beginTransaction();
+			transactionDao.delete(transaction);
+			System.out.println("Deleted");	
+			HibernateUtil.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+			HibernateUtil.rollbackTransaction();
+		}
+	}	
+	
+	@Override
+	public List<Transactions> getTransactionbyReloadid(int id) {
+		List<Transactions> transactions = null;
+		try {
+			HibernateUtil.beginTransaction();
+			System.out.println("found" + id);	
+			transactions = transactionDao.getTransactionbyReloadid(id);
+			
+				
+			HibernateUtil.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+			HibernateUtil.rollbackTransaction();
+		}
+		System.out.println("return" + id);	
+		return transactions;
+	}
+	
+	
+	
+	
+	
 }

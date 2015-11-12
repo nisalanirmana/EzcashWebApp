@@ -1,11 +1,4 @@
 package lk.dialoglab.ezcash.dao;
-
-
-
-
-
-
-
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +74,17 @@ public int getAtmID(String AtmName){
 		
 	}
 	
+	public List<Transactions> getTransactionbyReloadid(int id){
 	
+		System.out.println("Atm Name DAO "+id);
+		String hql = "from Transactions a where a.atmReload.reloadId = :d1";
+		Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", id);
+		
+
+		List<Transactions> transactions = findMany(query);
+		
+		return transactions;
+	}
 	
 
 	
