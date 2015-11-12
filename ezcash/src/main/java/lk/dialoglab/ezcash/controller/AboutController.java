@@ -23,7 +23,7 @@ public class AboutController {
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "about");
         logger.info("About page !");
-         
+         //Git Test Comment
         return "about";
     }
      
