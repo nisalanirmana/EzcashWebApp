@@ -16,6 +16,7 @@ public interface AtmService {
 	public List<Atm> getAtmList();
 	public List<AtmLocation> getAtmLocationList();
 	public List<Atm> getAtmDetails(String atmname);
+	public void updateatmbyid(AtmDto atmdto);
 	
 	public Atm findatmbyid(int id);
 	public void deleteatmbyid(Atm atm);

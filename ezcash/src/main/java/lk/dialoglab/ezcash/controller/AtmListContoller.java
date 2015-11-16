@@ -18,6 +18,8 @@ import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.AtmLocation;
 import lk.dialoglab.ezcash.domain.Operator;
 import lk.dialoglab.ezcash.dto.AssignedAtmDto;
+import lk.dialoglab.ezcash.dto.AtmDto;
+import lk.dialoglab.ezcash.dto.AtmEditList;
 import lk.dialoglab.ezcash.dto.AtmLocationDto;
 import lk.dialoglab.ezcash.dto.AtmLocationEditList;
 import lk.dialoglab.ezcash.dto.Login;
@@ -88,10 +90,16 @@ logger.info("Creating Model and View for System Page");
  session.setAttribute("MenuTab", "atm");
  session.setAttribute("AtmTab", "");
 //session.setAttribute("task", "editAtmLocation");
- String taskvariable = AtmLocationEditList.getTaskvariable();
- String taskvariableshow = AtmLocationEditList.getTaskvariableshow();
-request.setAttribute("task", taskvariable);
-request.setAttribute("taskshow", taskvariableshow);
+ String taskvariableAtmLocation = AtmLocationEditList.getTaskvariable();
+ String taskvariableshowAtmLocation = AtmLocationEditList.getTaskvariableshow();
+request.setAttribute("taskAtmLocation", taskvariableAtmLocation);
+request.setAttribute("taskshowAtmLocation", taskvariableshowAtmLocation);
+
+String taskvariableAtm = AtmEditList.getTaskvariable();
+String taskvariableshowAtm = AtmEditList.getTaskvariableshow();
+System.out.println("Task Variable"+ taskvariableAtmLocation);
+request.setAttribute("taskAtm", taskvariableAtm);
+request.setAttribute("taskshowAtm", taskvariableshowAtm);
 //request.getRequestDispatcher("page.jsp").forward(request, response);
  logger.info("AtmListController Model");
 //return model;
@@ -102,6 +110,9 @@ request.setAttribute("taskshow", taskvariableshow);
 	System.out.println("atmlocation"+atmlocation.getLocationName()+atmlocation.getLocationId());*/
 	List<AtmLocation> atmlocationeditlist=new ArrayList<AtmLocation>();
 	atmlocationeditlist=AtmLocationEditList.getAtmlocation();
+	
+	List<Atm> atmeditlist=new ArrayList<Atm>();
+	atmeditlist=AtmEditList.getAtm();
 	//Map<String, Object> model = new HashMap<String, Object>();
 	
 	
@@ -111,7 +122,8 @@ model.put("atmlist1", atmlist);
 model.put("atm", atmlist);
 model.put("atmlocationlist", atmlocationlist);
 model.put("atmlocationdrpdwnlist", atmlocationdrpdwn);
-model.put("atmAttribute",atmlocationeditlist);
+model.put("atmLocationAttribute",atmlocationeditlist);
+model.put("atmAttribute",atmeditlist);
 model.put("atmassignoplist",atmassignedoperatorlist);
 model.put("atmdrpdwnlist", atmdrpdwn);
 model.put("operatordrpdwnlist", opdrpdwn);
@@ -130,6 +142,26 @@ private List<Atm> getSystemTable(){
 	
 }
 
+@RequestMapping(value = "/addAtm", method = RequestMethod.POST)
+public String addAtm(AtmDto atm,  BindingResult result
+		) {
+
+	//	System.out.println("Atm Name:" + atm.getAtmName()+ "Location:"
+	//			+ atm.getAtmLocation());
+		logger.info("Add Reload");
+		System.out.println(atm.getAtmName());
+		System.out.println(atm.getAtmLocation());
+		System.out.println(atm.getSerialNo());
+		System.out.println(atm.getTray1());
+		System.out.println(atm.getTray2());
+		System.out.println(atm.getAtmcode());
+		System.out.println(atm.getTray1NoteValue()); 
+		System.out.println(atm.getTray2NoteValue());
+		atmService.addAtm(atm);
+		return  "redirect:/atmList";
+		
+}
+
 @RequestMapping("/removeatm/{atmid}")
 public String removePerson(@PathVariable("atmid") int id){
      Atm atm = null;
@@ -137,6 +169,53 @@ public String removePerson(@PathVariable("atmid") int id){
    atmService.deleteatmbyid(atm);
    return  "redirect:/atmList";
 }
+
+@RequestMapping(value ="/editAtm/{atmid}",method = RequestMethod.GET)//This Retrives the Data
+public String updateAtm(@PathVariable("atmid") Integer id){
+    //atmlocation = atmService.findatmLocationbyid(id);
+	System.out.println("ID "+id);
+	Atm atm = new Atm();
+	atm=atmService.findatmbyid(id);
+	System.out.println("atm"+atm.getAtmName()+atm.getAtmId());
+	List<Atm> atmlist=new ArrayList<Atm>();
+	atmlist.add(atm);
+	AtmEditList.setAtm(atmlist); 
+	AtmEditList.setTaskvariable("editAtm");
+	AtmEditList.setTaskvariableshow("Save");
+	//Map<String, Object> model = new HashMap<String, Object>();
+   
+	//model.put("atmAttribute",atmlocationlist);
+	
+	//System.out.println("get 0 "+atmlocationlist.get(0).getLocationName());
+   
+	return  "redirect:/atmList";
+}
+
+
+@RequestMapping(value = "/editAtm" , method = RequestMethod.POST)//this is only modify code
+//@RequestMapping(params = "editAtmLocation", method = RequestMethod.POST)
+public String editAtm(AtmDto atmdto,  BindingResult result
+		) {
+
+	//	System.out.println("Atm Name:" + atm.getAtmName()+ "Location:"
+	//			+ atm.getAtmLocation());
+		logger.info("Edit Atm Location");
+		atmdto.setInstalledDate(atmService.findatmbyid(atmdto.getAtmId()).getInstalledDate());
+		atmdto.setLivePktTime(atmService.findatmbyid(atmdto.getAtmId()).getLivePktTime());
+		atmdto.setBatLevel(atmService.findatmbyid(atmdto.getAtmId()).getbatteryLevel());
+		atmdto.setReject1(atmService.findatmbyid(atmdto.getAtmId()).getReject1());
+		atmdto.setReject2(atmService.findatmbyid(atmdto.getAtmId()).getReject2());
+		atmdto.setStatus(atmService.findatmbyid(atmdto.getAtmId()).getStatus());
+		atmService.updateatmbyid(atmdto);
+		AtmEditList.clearAtm();
+		AtmEditList.setTaskvariable("addAtm");
+		AtmEditList.setTaskvariableshow("Add New");
+		return  "redirect:/atmList";
+		
+}
+
+
+
 
 @RequestMapping("/removeatmlocation/{locationId}")
 public String removeLocation(@PathVariable("locationId") int id){
@@ -188,7 +267,7 @@ public String editAtmLocation(AtmLocationDto atmlocation,  BindingResult result
 
 @RequestMapping(value = "/addAtmLocation", method = RequestMethod.POST)
 //@RequestMapping(params = "addAtmLocation", method = RequestMethod.POST)
-public String addReload(AtmLocationDto atmlocation,  BindingResult result
+public String addAtmLocation(AtmLocationDto atmlocation,  BindingResult result
 		) {
 
 	//	System.out.println("Atm Name:" + atm.getAtmName()+ "Location:"

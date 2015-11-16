@@ -116,25 +116,7 @@ public class AtmController {
 		
 	}
 	
-	@RequestMapping(value = "/addAtm", method = RequestMethod.POST)
-		public String addReload(AtmDto atm,  BindingResult result
-				) {
 
-			//	System.out.println("Atm Name:" + atm.getAtmName()+ "Location:"
-			//			+ atm.getAtmLocation());
-				logger.info("Add Reload");
-				System.out.println(atm.getAtmName());
-				System.out.println(atm.getAtmLocation());
-				System.out.println(atm.getSerialNo());
-				System.out.println(atm.getTray1());
-				System.out.println(atm.getTray2());
-				System.out.println(atm.getAtmcode());
-				System.out.println(atm.getTray1NoteValue()); 
-				System.out.println(atm.getTray2NoteValue());
-				atmService.addAtm(atm);
-				return  "redirect:/atmList";
-				
-	}
 	
 	@RequestMapping(value="/unlockatm/{atmName}", method=RequestMethod.GET)
 	public String handlePost1(@PathVariable("atmName") String argument,@RequestParam String action, Model m) throws IOException {

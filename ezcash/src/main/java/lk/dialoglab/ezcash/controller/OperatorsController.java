@@ -68,10 +68,10 @@ public class OperatorsController {
     	
     	  HttpSession session = request.getSession();
           session.setAttribute("MenuTab", "operators");
-          String taskvariable = OperatorEditList.getTaskvariable();
-          String taskvariableshow = OperatorEditList.getTaskvariableshow();
-         request.setAttribute("task", taskvariable);
-         request.setAttribute("taskshow", taskvariableshow);
+          String taskvariableOperator = OperatorEditList.getTaskvariable();
+          String taskvariableshowOperator = OperatorEditList.getTaskvariableshow();
+         request.setAttribute("taskOperator", taskvariableOperator);
+         request.setAttribute("taskshowOperator", taskvariableshowOperator);
           logger.info("returning the model");
           
       	List<Operator> operatoreditlist=new ArrayList<Operator>();

@@ -207,7 +207,7 @@ public class AtmServiceImpl implements AtmService {
 		try {
 			HibernateUtil.beginTransaction();
 			Atm atm = new Atm();
-			atm.setAtmId(atmdto.getAtmId());
+			//atm.setAtmId(atmdto.getAtmId());
 			
 			
 			//Atm Name
@@ -281,6 +281,68 @@ public class AtmServiceImpl implements AtmService {
 		
 	
 	}
+
+	@Override
+	public void updateatmbyid(AtmDto atmdto) {
+		try {
+			HibernateUtil.beginTransaction();
+			Atm atm = new Atm();
+			
+			/*
+			System.out.println("atmlocation"+atmlocationdto.getLocationId());
+			System.out.println("atmlocation"+atmlocationdto.getLocationName());
+			System.out.println("atmlocation"+atmlocationdto.getLocationX());
+			System.out.println("atmlocation"+atmlocationdto.getLocationY());
+			*/
+			atm.setAtmId(atmdto.getAtmId());
+			atm.setAtmName(atmdto.getAtmName());
+			
+			//Atm Location
+			AtmLocation atmlocationObject = new AtmLocation();
+			String atmname = atmdto.getAtmLocation();
+			//Integer atmId = Integer.parseInt(atmid);
+			atmlocationObject.setLocationId(atmDao.getAtmLocationId(atmname));
+			atm.setAtmLocation(atmlocationObject);
+			atm.setSerialNo(atmdto.getSerialNo());
+			atm.setTray1(atmdto.getTray1());
+			atm.setTray2(atmdto.getTray1());
+			atm.setAtmCode(atmdto.getAtmcode());
+			atm.setTray1NoteValue(atmdto.getTray1NoteValue());
+			atm.setTray2NoteValue(atmdto.getTray2NoteValue());
+			
+		    
+			//DateCreated//
+			DateFormat formatter2 = new SimpleDateFormat("dd-MM-yy hh:mm");
+			Date date2 = new Date();
+			Date datenow = formatter2.parse(formatter2.format(date2));
+			
+			atm.setInstalledDate(atmdto.getInstalledDate());
+			
+			//status
+			atm.setStatus(atmdto.getStatus());
+			
+			//LivePkt Time
+			atm.setLivePktTime(atmdto.getLivePktTime());
+			
+			//reject1
+			atm.setReject1(atmdto.getReject1());
+			//reject2
+			atm.setReject2(atmdto.getReject2());
+			
+			//bat level
+			atm.setbatteryLevel(atmdto.getBatLevel());
+		    
+			
+			
+			
+			atmDao.update(atm);
+			System.out.println("Updated");	
+			HibernateUtil.commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+			HibernateUtil.rollbackTransaction();
+		}
+	}
 	
 	
 	
@@ -331,6 +393,8 @@ public class AtmServiceImpl implements AtmService {
 		
 	
 	}
+	
+	
 	
 	public List<AtmLocation> getAtmLocationList(){
 		List<AtmLocation> atmlocation=null;

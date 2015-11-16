@@ -27,7 +27,7 @@
  </definition>
  
  <definition name="welcome" template="/jsp/layout/homelayout.jsp">
-   <put-attribute name="title" value="Welcome To eZ-Cash ATM Managment System" />
+ 
   <put-attribute name="body" value="/jsp/welcome.jsp" />
   <put-attribute name="footer" value="/jsp/layout/footer.jsp" />
  </definition>

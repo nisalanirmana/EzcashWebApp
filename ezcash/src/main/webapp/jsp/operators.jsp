@@ -56,8 +56,8 @@
 				   
 				   <tr>
 				
-			<form:form method="post" action='${task}' >
-			<td colspan="2"><input type="submit"  style="width:90%" value='${taskshow}' name='${task}'></td>
+			<form:form method="post" action='${taskOperator}' >
+			<td colspan="2"><input type="submit"  style="width:90%" value='${taskshowOperator}' name='${taskOperator}'></td>
 			<td><input type="text" style="width:80%" class="text" name="operatorId" value="${operatorAttribute[0].operatorId}" readonly></td>
 			<td><input type="text" style="width:80%" class="text" name="operatorName" value="${operatorAttribute[0].operatorName}" required></td>
 			<td><input type="text" style="width:80%" class="text" name="operatorPin" value="${operatorAttribute[0].operatorPin}" required></td>

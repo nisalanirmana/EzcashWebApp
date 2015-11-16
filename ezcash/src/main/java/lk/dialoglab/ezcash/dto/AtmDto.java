@@ -15,8 +15,50 @@ public class AtmDto {
 	     private int tray1NoteValue;
 	     private int tray2NoteValue;
 	     private String Operator;
+	     private Date installedDate;
+	     private Date livePktTime;
+	     private Integer batLevel;
+	     private int reject1;
+	     private int reject2;
+	     private String status;
 	     
 	     
+		public Date getInstalledDate() {
+			return installedDate;
+		}
+		public void setInstalledDate(Date installedDate) {
+			this.installedDate = installedDate;
+		}
+		public Date getLivePktTime() {
+			return livePktTime;
+		}
+		public void setLivePktTime(Date livePktTime) {
+			this.livePktTime = livePktTime;
+		}
+		public Integer getBatLevel() {
+			return batLevel;
+		}
+		public void setBatLevel(Integer batLevel) {
+			this.batLevel = batLevel;
+		}
+		public int getReject1() {
+			return reject1;
+		}
+		public void setReject1(int reject1) {
+			this.reject1 = reject1;
+		}
+		public int getReject2() {
+			return reject2;
+		}
+		public void setReject2(int reject2) {
+			this.reject2 = reject2;
+		}
+		public String getStatus() {
+			return status;
+		}
+		public void setStatus(String status) {
+			this.status = status;
+		}
 		public Integer getAtmId() {
 			return atmId;
 		}

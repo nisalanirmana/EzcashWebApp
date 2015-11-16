@@ -28,7 +28,7 @@
 	        <table class="tablesorter" >
 	        <thead> 
 	        <tr>
-	        	<th>Action</th>
+	        	<th colspan="2">Action</th>
 	        	<th>Atm Id</th>
 	        	<th>Name</th>
 	        	<th>Serial No</th>
@@ -44,6 +44,7 @@
 				<c:forEach var="atm" items="${atm}" >
 	        	<tr>
 	        		<td><a href="<c:url value='/removeatm/${atm.atmId}' />" ><img src="<c:url value='/resources/img/delete.png'/>" /></a></td>
+	        		<td ><a href="<c:url value='/editAtm/${atm.atmId}' />" ><img src="<c:url value='/resources/img/edit.png'/>" /></a></td>
 					<td>${atm.atmId}</td>
 					<td>${atm.atmName}</td>
 					<td>${atm.serialNo}</td>
@@ -58,17 +59,25 @@
 				</c:forEach>	        
 				</tbody> 	
 			</table>
-			 <h3 style="margin-left:2px;font-family: Palatino Linotype;text-align: left;" >Add New Atm</h3>
+			 <h3 style="margin-left:2px;font-family: Palatino Linotype;text-align: left;" >Add/Edit Atm</h3>
 			 <table  class="tablesorter">
 
 	      
 	
 		<thead>
-		<form:form method="post" action="addAtm">
+		<form:form method="post" action='${taskAtm}'>
+		
+		    <tr>
+	        	<td>Atm Id</td>
+	        		<td>
+				<input type="text" style="width:100%"  name="atmId" value="${atmAttribute[0].atmId}" readonly>
+			</td>
+	        	
+			</tr>
 	       <tr>
 	        	<td>Name</td>
 	        		<td>
-				<input type="text" style="width:100%"  name="atmName" required>
+				<input type="text" style="width:100%"  name="atmName" value="${atmAttribute[0].atmName}" required>
 			</td>
 	        	
 			</tr>
@@ -77,7 +86,7 @@
 	        
 						<td>
 						<select name="atmLocation"  style="width:100%">
-                      	<option value="" label="............." />
+                      	<option value="${atmAttribute[0].atmLocation.locationName}" label="${atmAttribute[0].atmLocation.locationName}" />
 						<c:forEach var="atl" items="${atmlocationdrpdwnlist}" >
                        <option>${atl}</option>
 						</c:forEach>
@@ -92,46 +101,46 @@
 			 <tr>
 	        	<td>Serial No</td>
 	        		<td >
-				<input type="text" style="width:100%" class="text" name="serialNo" required>
+				<input type="text" style="width:100%" class="text" name="serialNo" value="${atmAttribute[0].serialNo}" required>
 			</td>
 	        	
 			</tr>
 			 <tr>
 	        	<td>Tray1 Amount</td>
 	        	<td >
-				<input type="text" style="width:100%" class="text" name="tray1" required>
+				<input type="text" style="width:100%" class="text" name="tray1" value="${atmAttribute[0].tray1}"  required>
 			</td>
 			</tr>
 			 <tr>
 	        	<td>Tray2 Amount</td>
 	        		<td >
-				<input type="text" style="width:100%" class="text" name="tray2" required>
+				<input type="text" style="width:100%" class="text" name="tray2" value="${atmAttribute[0].tray2}" required>
 			</td>
 			</tr>
 			 <tr>
 	        	
 	        	<td>Atm Code</td>
 	        		<td >
-				<input type="text" style="width:100%" class="text" name="atmcode" required>
+				<input type="text" style="width:100%" class="text" name="atmcode" value="${atmAttribute[0].atmCode}" required>
 			</td>
 			</tr>
 			<tr>
 	        	<td>Tray1 Note</td>
 	        
 			<td >
-				<input type="text" style="width:100%" class="text" name="tray1NoteValue" required>
+				<input type="text" style="width:100%" class="text" name="tray1NoteValue" value="${atmAttribute[0].tray1NoteValue}" required>
 			</td>
 			</tr>
 			<tr>
 	        	<td>Tray2 Note</td>
 	        		<td >
-				<input type="text" style="width:100%" class="text" name="tray2NoteValue" required>
+				<input type="text" style="width:100%" class="text" name="tray2NoteValue" value="${atmAttribute[0].tray2NoteValue}" required>
 			</td>
 			
 			</tr>
 			<tr>
 			<td>
-			<td><input type="submit" style="width:40%" value="Add Atm"></td>
+			<td><input type="submit" style="width:40%" value='${taskshowAtm}' name='${taskAtm}'></td>
 				<td >
 				
 				</td>
@@ -146,7 +155,7 @@
 					 <h3 style="margin-left:2px;font-family: Palatino Linotype;text-align: left;" >Add New Atm Location</h3>
 			<table class="tablesorter">
 			
-			<form:form method="post" action='${task}' >
+			<form:form method="post" action='${taskAtmLocation}' >
 			<thead>
 			<tr>
 			<th colspan="2">Task</th>
@@ -161,8 +170,9 @@
 			
 							<c:forEach var="atmloc" items="${atmlocationlist}" >
 	        			<tr>
+	        			<td ><a href="<c:url value='/removeatmlocation/${atmloc.locationId}' />" ><img src="<c:url value='/resources/img/delete.png'/>" /></a></td>
 	        		<td ><a href="<c:url value='/editAtmLocation/${atmloc.locationId}' />" ><img src="<c:url value='/resources/img/edit.png'/>" /></a></td>
-	        		<td ><a href="<c:url value='/removeatmlocation/${atmloc.locationId}' />" ><img src="<c:url value='/resources/img/delete.png'/>" /></a></td>
+	        		
 	        		
 	        		<td>${atmloc.locationId}</td>
 					<td>${atmloc.locationName}</td>
@@ -176,11 +186,11 @@
 				</c:forEach>
 			
 			<tr>
-			<td colspan="2"><input type="submit"  style="width:90%" value='${taskshow}' name='${task}'></td>
-			<td><input type="text" style="width:80%" class="text" name="locationId" value="${atmAttribute[0].locationId}" required></td>
-			<td><input type="text" style="width:80%" class="text" name="locationName" value="${atmAttribute[0].locationName}" required></td>
-			<td><input type="text" style="width:80%" class="text" name="locationX" value="${atmAttribute[0].locationX}" required></td>
-			<td><input type="text" style="width:80%" class="text" name="locationY" value="${atmAttribute[0].locationY}" required></td>
+			<td colspan="2"><input type="submit"  style="width:90%" value='${taskshowAtmLocation}' name='${taskAtmLocation}'></td>
+			<td><input type="text" style="width:80%" class="text" name="locationId" value="${atmLocationAttribute[0].locationId}" readonly></td>
+			<td><input type="text" style="width:80%" class="text" name="locationName" value="${atmLocationAttribute[0].locationName}" required></td>
+			<td><input type="text" style="width:80%" class="text" name="locationX" value="${atmLocationAttribute[0].locationX}" required></td>
+			<td><input type="text" style="width:80%" class="text" name="locationY" value="${atmLocationAttribute[0].locationY}" required></td>
 			</tr>
 			<tbody>
 			
@@ -223,7 +233,7 @@
 							<tr>
 			<td ><input type="submit"  style="width:90%" value="Save" name="assignAtmOperator"></td>
 			
-			<td><input type="text" style="width:80%" class="text" name="assignId" value="${atmAttribute[0].locationName}" readonly></td>
+			<td><input type="text" style="width:80%" class="text" name="assignId" value="${atmLocationAttribute[0].locationName}" readonly></td>
 
 								<td>
 						<select name="atmId" >

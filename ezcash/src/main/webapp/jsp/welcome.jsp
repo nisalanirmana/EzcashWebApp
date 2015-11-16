@@ -1,7 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 		<meta charset="utf-8">
 	    <link href="resources/css/style.css" rel='stylesheet' type='text/css' />
-<title>Welcome To eZ-Cash ATM Managment System</title>
+<title>eZ-Cash ATM Management System</title>
 </head>
 <body>
 
