@@ -8,21 +8,9 @@
 <body >
 
 <table border="0" align="center" width="1024"  >
-
-	<tr>
- 		<td height="30" colspan="2">
- 			<tiles:insertAttribute name="header" />
- 		</td>
-	</tr>
-	
- 	<tr>
-        <td width="124" height="520" valign="top" rowspan="2" >
-        	<tiles:insertAttribute name="navigation" />
-        </td>	
-    </tr>
-    
     <tr>
         <td valign="top" width="900"   >
+        
 			<tiles:insertAttribute name="body" />
 		</td>
     </tr>
