@@ -269,13 +269,18 @@
 			
 			</table>
 			
-	<script>
-$(".text_div").text(function () { 
-    return $(this).text().replace("0", "ATM Operator"); 
+ <script>
+$(".text_div").text(function () {
+    return $(this).text().replace("1", "Connected"); 
 });
+</script> 	
+ <script>
 $(".text_div").text(function () { 
-    return $(this).text().replace("1", "Finance Division"); 
+    return $(this).text().replace("0", "Failed"); 
 });
+</script>
+   <script>
+$( "div:contains('Failed')" ).css( "background-color", "#FF3366" );
 </script>		
 </body>
 </html>
