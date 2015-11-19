@@ -68,6 +68,7 @@ $(function() {
 		<table class="tablesorter">
 			<thead>
 				<tr>
+				<th>Task</th>
 					<th>ATM Name</th>
 					<th>Transaction Time</th>
 					<th>Transaction Amount</th>
@@ -79,6 +80,8 @@ $(function() {
 			<tbody>
 				<c:forEach var="transactions" items="${transactions}">
 					<tr>
+					<td><a href="<c:url value='/removeTransaction/${transactions.transactionId}' />"><img
+							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
 						<td>${transactions.cashOut.atm.atmName}</td>
 						<td>${transactions.cashOut.cashOutDate}</td>
 						<td>${transactions.amount}</td>
@@ -91,6 +94,7 @@ $(function() {
 		<table class="tablesorter">
 			<thead>
 				<tr>
+				     <th>Task</th>
 					<th>ATM Name</th>
 					<th>Created Time</th>
 					<th>End Time</th>
@@ -104,6 +108,8 @@ $(function() {
 			<tbody>
 				<c:forEach var="reloads" items="${reloads}">
 					<tr>
+					<td><a href="<c:url value='/removeTransaction/${reloads.transactionId}' />"><img
+							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
 						<td>${reloads.atmReload.atm.atmName}</td>
 						<td>${reloads.atmReload.taskCreatedTime}</td>
 						<td>${reloads.atmReload.reloadEndTime}</td>

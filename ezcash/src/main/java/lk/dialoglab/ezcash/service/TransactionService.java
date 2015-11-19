@@ -13,6 +13,8 @@ public interface TransactionService {
     public List<Transactions> getReloads();
 
     public List<Transactions> getFilteredTrans(Date fromDate, Date toDate);
+    
+    public List<Transactions> getFilteredReloads(Date fromDate, Date toDate);
 
     public Transactions findtransactionbyid(int id);
 

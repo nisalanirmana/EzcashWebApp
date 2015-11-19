@@ -20,4 +20,6 @@ public interface ReloadService {
     public List<Atm> getAtmDropDownList();
 
     public List<Operator> getOperatorDropDownList();
+    
+    
 }

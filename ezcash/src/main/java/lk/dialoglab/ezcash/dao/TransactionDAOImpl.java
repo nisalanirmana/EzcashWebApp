@@ -29,6 +29,19 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         return transactions;
 
     }
+    
+    public List<Transactions> getFilteredReloads(Date fromDate, Date toDate) {
+        String hql = "from Transactions t where t.atmReload.reloadEndTime>:d1 and t.atmReload.reloadEndTime<:d2 order by t.atmReload.reloadEndTime desc";
+        // String hql =
+        // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate)
+                .setParameter("d2", toDate);
+
+        List<Transactions> reloads = findMany(query);
+
+        return reloads;
+
+    }
 
     /*
      * public int getAtmID(String AtmName){

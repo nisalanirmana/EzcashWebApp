@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.dto.Login;
@@ -25,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,8 +70,11 @@ public class TransactionController {
         logger.info("Get Dates");
 
         List<Transactions> transactions = getFilteredTrans(period.getFromDate(), period.getToDate());
+        List<Transactions> reloads = getFilteredReloads(period.getFromDate(), period.getToDate());
         ModelAndView model = new ModelAndView("transaction");
         model.addObject("transactions", transactions);
+        model.addObject("reloads", reloads);
+        //model.addObject("reloads", transactions);
 
         return model;
 
@@ -90,6 +95,24 @@ public class TransactionController {
 
         }
         return transactions;
+
+    }
+    
+    private List<Transactions> getFilteredReloads(String fromDate, String toDate) throws ParseException {
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
+
+        Date date1 = formatter.parse(fromDate);
+        Date date2 = formatter.parse(toDate);
+        List<Transactions> reloads = transactionService.getFilteredReloads(date1, date2);
+        logger.info("****************************************************************888");
+  /*      for (Transactions t : reloads) {
+
+            logger.info("Amount" + t.getAtmReload().getReloadEndTime());
+            // logger.info("ATM Location"+t.get);
+
+        }*/
+        return reloads;
 
     }
 
@@ -126,5 +149,14 @@ public class TransactionController {
         return reloads;
 
     }
+    
+    @RequestMapping("/removeTransaction/{transactionId}")
+    public String removeTransactions(@PathVariable("transactionId") int id) {
+        Transactions transaction =new Transactions();
+        transaction = transactionService.findtransactionbyid(id);
+        transactionService.deletetransactionbyid(transaction);
+        return "redirect:/transaction";
+    }
+
 
 }

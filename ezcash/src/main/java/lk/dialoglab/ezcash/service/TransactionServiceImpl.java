@@ -105,6 +105,25 @@ public class TransactionServiceImpl implements TransactionService {
         return transactions;
 
     }
+    
+    public List<Transactions> getFilteredReloads(Date fromDate, Date toDate) {
+        List<Transactions> reloads = null;
+
+        try {
+            HibernateUtil.beginTransaction();
+
+            reloads = transactionDao.getFilteredReloads(fromDate, toDate);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return reloads;
+
+    }
 
     @Override
     public Transactions findtransactionbyid(int id) {

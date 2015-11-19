@@ -16,6 +16,8 @@ import lk.dialoglab.ezcash.domain.Transactions;
 public interface TransactionDAO extends GenericDAO<Transactions, Integer> {
 
     public List<Transactions> getFilteredTrans(Date fromDate, Date toDate);
+    
+    public List<Transactions> getFilteredReloads(Date fromDate, Date toDate);
 
     public List<Transactions> getTransactions();
 

@@ -1,5 +1,8 @@
 package lk.dialoglab.ezcash.dao;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.hibernate.Query;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.AtmReload;
+import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.util.HibernateUtil;
 
 @Component
@@ -36,6 +40,19 @@ public class ReloadDAOImpl extends GenericDAOImpl<AtmReload, Integer> implements
         System.out.println(" Query TransactionDAOImpl " + query);
 
         return (int) query.uniqueResult();
+
+    }
+    
+    public List<AtmReload> getFilteredReloads(Date fromDate, Date toDate) {
+        String hql = "from  AtmReload t where t.reloadEndTime>:d1 and t.reloadEndTime<:d2 order by t.reloadEndTime desc";
+        // String hql =
+        // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate)
+                .setParameter("d2", toDate);
+
+        List<AtmReload> reloads = findMany(query);
+
+        return reloads;
 
     }
 
