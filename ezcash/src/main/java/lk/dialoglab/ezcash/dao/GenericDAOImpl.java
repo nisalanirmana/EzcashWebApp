@@ -23,65 +23,65 @@ import org.springframework.stereotype.Component;
 @Component
 public class GenericDAOImpl<T, ID extends Serializable> implements GenericDAO<T, ID> {
 
-	protected HibernateUtil hibernateUtil;
+    protected HibernateUtil hibernateUtil;
 
-	public GenericDAOImpl() {
+    public GenericDAOImpl() {
 
-	}
+    }
 
-	@Autowired
-	public GenericDAOImpl(HibernateUtil hibernateUtil) {
-		this.hibernateUtil = hibernateUtil;
-	}
+    @Autowired
+    public GenericDAOImpl(HibernateUtil hibernateUtil) {
+        this.hibernateUtil = hibernateUtil;
+    }
 
-	protected Session getSession() {
+    protected Session getSession() {
 
-		return hibernateUtil.getSession();
-	}
+        return hibernateUtil.getSession();
+    }
 
-	public void save(Object object) {
-		Session hibernateSession = this.getSession();
-		hibernateSession.saveOrUpdate(object);
-		hibernateSession.flush();
-	 
-	}
+    public void save(Object object) {
+        Session hibernateSession = this.getSession();
+        hibernateSession.saveOrUpdate(object);
+        hibernateSession.flush();
 
-	public void update(T entity) {
-		Session hibernateSession = this.getSession();
-		hibernateSession.update(entity);
-		hibernateSession.flush();
-	}
+    }
 
-	public void delete(T entity) {
-		Session hibernateSession = this.getSession();
-		hibernateSession.delete(entity);
-		hibernateSession.flush();
-	}
+    public void update(T entity) {
+        Session hibernateSession = this.getSession();
+        hibernateSession.update(entity);
+        hibernateSession.flush();
+    }
 
-	public List<T> findMany(Query query) {
-		List<T> t;
-		t = (List<T>) query.list();
-		return t;
-	}
+    public void delete(T entity) {
+        Session hibernateSession = this.getSession();
+        hibernateSession.delete(entity);
+        hibernateSession.flush();
+    }
 
-	public T findOne(Query query) {
-		T t;
-		t = (T) query.uniqueResult();
-		return t;
-	}
+    public List<T> findMany(Query query) {
+        List<T> t;
+        t = (List<T>) query.list();
+        return t;
+    }
 
-	public T findByID(Class clazz, Number id) {
-		Session hibernateSession = this.getSession();
-		T t = null;
-		t = (T) hibernateSession.get(clazz, id);
-		return t;
-	}
+    public T findOne(Query query) {
+        T t;
+        t = (T) query.uniqueResult();
+        return t;
+    }
 
-	public List findAll(Class clazz) {
-		Session hibernateSession = this.getSession();
-		List T = null;
-		Query query = hibernateSession.createQuery("from " + clazz.getName());
-		T = query.list();
-		return T;
-	}
+    public T findByID(Class clazz, Number id) {
+        Session hibernateSession = this.getSession();
+        T t = null;
+        t = (T) hibernateSession.get(clazz, id);
+        return t;
+    }
+
+    public List findAll(Class clazz) {
+        Session hibernateSession = this.getSession();
+        List T = null;
+        Query query = hibernateSession.createQuery("from " + clazz.getName());
+        T = query.list();
+        return T;
+    }
 }

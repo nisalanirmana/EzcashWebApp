@@ -1,7 +1,5 @@
 package lk.dialoglab.ezcash.dao;
 
-
-
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +15,6 @@ import lk.dialoglab.ezcash.domain.WebUser;
  */
 public interface WebUserDAO extends GenericDAO<WebUser, Integer> {
 
-	public String getWebUserPassword(String username);
+    public String getWebUserPassword(String username);
 
 }

@@ -1,7 +1,5 @@
 package lk.dialoglab.ezcash.dao;
 
-
-
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +16,10 @@ import lk.dialoglab.ezcash.domain.Transactions;
  */
 public interface AtmDAO extends GenericDAO<Atm, Integer> {
 
-	public List<Atm> getAtmDropDownList();
-	public List<Atm> getAtmDetails(String Atmname);
-	public int getAtmLocationId(String Atmlocation);
-	
+    public List<Atm> getAtmDropDownList();
+
+    public List<Atm> getAtmDetails(String Atmname);
+
+    public int getAtmLocationId(String Atmlocation);
+
 }

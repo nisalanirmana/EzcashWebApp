@@ -1,7 +1,5 @@
 package lk.dialoglab.ezcash.dao;
 
-
-
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +14,5 @@ import lk.dialoglab.ezcash.domain.Didmap;
  * @version 1.0
  */
 public interface DidmapDAO extends GenericDAO<Didmap, Integer> {
-
-
 
 }

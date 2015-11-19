@@ -8,18 +8,16 @@ import lk.dialoglab.ezcash.domain.Transactions;
 
 public interface TransactionService {
 
-	public List<Transactions> getTransactions();
-	
-	public List<Transactions> getReloads();
-	
-	public List<Transactions> getFilteredTrans(Date fromDate,Date toDate);
-	
-	public Transactions findtransactionbyid(int id);
-	
-	public void deletetransactionbyid(Transactions transaction);
-	
-	public List<Transactions> getTransactionbyReloadid(int id);
-	
-	
-	
+    public List<Transactions> getTransactions();
+
+    public List<Transactions> getReloads();
+
+    public List<Transactions> getFilteredTrans(Date fromDate, Date toDate);
+
+    public Transactions findtransactionbyid(int id);
+
+    public void deletetransactionbyid(Transactions transaction);
+
+    public List<Transactions> getTransactionbyReloadid(int id);
+
 }

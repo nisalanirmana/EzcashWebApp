@@ -3,8 +3,6 @@ package lk.dialoglab.ezcash.controller;
 import java.io.IOException;
 import java.util.List;
 
-
-
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,65 +27,51 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SystemContoller {
-	
-@Autowired
-private AtmService atmService;
 
+    @Autowired
+    private AtmService atmService;
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(SystemContoller.class);
+    private static final Logger logger = LoggerFactory.getLogger(SystemContoller.class);
 
-	@RequestMapping(value="/authenticated")
-	public ModelAndView Sytem(HttpServletRequest request) {   
-		logger.info("System Overview Page!");
-		
-		List<Atm> atmlist=getSystemTable();	
-		for (Atm a:atmlist)
-		{
-			
-			logger.info("ATM Name"+a.getAtmName());
-			logger.info("ATM Location"+a.getAtmLocation().getLocationName());
-			logger.info("ATM Status"+a.getStatus());
-		
-		}
-	logger.info("Creating Model and View for System Page");
-	ModelAndView model = new ModelAndView("system");
-	model.addObject("atmlist", atmlist);
-	 HttpSession session = request.getSession();
-     session.setAttribute("MenuTab", "system");
-     logger.info("returning the model");
-	return model;
-	
-	
-	}
-	
+    @RequestMapping(value = "/authenticated")
+    public ModelAndView Sytem(HttpServletRequest request) {
+        logger.info("System Overview Page!");
 
-	 
-	
+        List<Atm> atmlist = getSystemTable();
+        for (Atm a : atmlist) {
 
-	
-	private List<Atm> getSystemTable(){
-		List<Atm> atmlist=	atmService.getAtmList();
-		logger.info("****************************************************************888");
-		
-		return atmlist;
-		
-	}
-	
-	
-	@RequestMapping(value="/logout")
-	public String Logout(HttpServletRequest request) {   
-		logger.info("System Overview Page!");
-		
-		
+            logger.info("ATM Name" + a.getAtmName());
+            logger.info("ATM Location" + a.getAtmLocation().getLocationName());
+            logger.info("ATM Status" + a.getStatus());
 
+        }
+        logger.info("Creating Model and View for System Page");
+        ModelAndView model = new ModelAndView("system");
+        model.addObject("atmlist", atmlist);
+        HttpSession session = request.getSession();
+        session.setAttribute("MenuTab", "system");
+        logger.info("returning the model");
+        return model;
 
-	 HttpSession session = request.getSession();
-     session.setAttribute("LoginUser", null);
-     logger.info("returning the model");
-     return  "redirect:/welcome";
-	
-	
-	}
+    }
+
+    private List<Atm> getSystemTable() {
+        List<Atm> atmlist = atmService.getAtmList();
+        logger.info("****************************************************************888");
+
+        return atmlist;
+
+    }
+
+    @RequestMapping(value = "/logout")
+    public String Logout(HttpServletRequest request) {
+        logger.info("System Overview Page!");
+
+        HttpSession session = request.getSession();
+        session.setAttribute("LoginUser", null);
+        logger.info("returning the model");
+        return "redirect:/welcome";
+
+    }
 
 }

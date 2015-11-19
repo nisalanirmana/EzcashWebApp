@@ -1,4 +1,4 @@
- package lk.dialoglab.ezcash.controller;
+package lk.dialoglab.ezcash.controller;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,122 +32,99 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TransactionController {
-	
-	@Autowired
-	TransactionService transactionService;
-     
+
+    @Autowired
+    TransactionService transactionService;
+
     private static final Logger logger = LoggerFactory.getLogger(TransactionController.class);
-     
+
     @RequestMapping(value = "/transaction", method = RequestMethod.GET)
     public ModelMap showSystemForm(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "transaction");
         logger.info("transaction page !");
-        
-        List<Transactions> transaction=	getTransactions();
-       List<Transactions> reload =		getReloads();
-       ModelMap model = new ModelMap();
-       
-       // ModelAndView model = new ModelAndView("transaction");
-   	//model.addObject("transactions",transactions);
-   	//model.addObject("transactions", reloads);
-      model.put("transactions", transaction);
-       model.put("reloads", reload);
-      //  model.a("transactions", transactions);
-       //model.addAttribute("two", 2);
-         
-      return model;
+
+        List<Transactions> transaction = getTransactions();
+        List<Transactions> reload = getReloads();
+        ModelMap model = new ModelMap();
+
+        // ModelAndView model = new ModelAndView("transaction");
+        // model.addObject("transactions",transactions);
+        // model.addObject("transactions", reloads);
+        model.put("transactions", transaction);
+        model.put("reloads", reload);
+        // model.a("transactions", transactions);
+        // model.addAttribute("two", 2);
+
+        return model;
     }
-    
-    
+
     @RequestMapping(value = "/getdates", method = RequestMethod.POST)
-   	public ModelAndView getdates(Period period,  BindingResult result
-   		) throws ParseException {
+    public ModelAndView getdates(Period period, BindingResult result) throws ParseException {
 
-   		System.out.println("-------------------------------------------------------------------------------Start Date:" + period.getFromDate() + "End Date:"
-   		+ period.getToDate()+period.getAtmName());
+        System.out.println("-------------------------------------------------------------------------------Start Date:"
+                + period.getFromDate() + "End Date:" + period.getToDate() + period.getAtmName());
 
-   		logger.info("Get Dates");
-   		
-   		
-   	  List<Transactions> transactions=getFilteredTrans(period.getFromDate(),period.getToDate());
-   	 ModelAndView model = new ModelAndView("transaction");
-    	model.addObject("transactions", transactions);
-          
-       return model;	
-   		
-   		
+        logger.info("Get Dates");
 
-   	 
-   	 
-   
-   }
-    
-    
-    private List<Transactions> getFilteredTrans(String fromDate,String toDate) throws ParseException
-    {	
-    
-    
-   
-	
-	
-	DateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
+        List<Transactions> transactions = getFilteredTrans(period.getFromDate(), period.getToDate());
+        ModelAndView model = new ModelAndView("transaction");
+        model.addObject("transactions", transactions);
 
-	Date date1 = formatter.parse(fromDate);
-	Date date2 = formatter.parse(toDate);
-	List<Transactions> transactions=	transactionService.getFilteredTrans(date1,date2);
-	logger.info("****************************************************************888");
-	for (Transactions t:transactions)
-	{
-		
-		logger.info("Amount"+t.getAmount());
-	//	logger.info("ATM Location"+t.get);
-		
-	
-	}
-	return transactions;
-    	
-    	
+        return model;
+
     }
-    
-    
-    
-  
-   
-    
-    
-    private List<Transactions> getTransactions()
-    {List<Transactions> transactions=	transactionService.getTransactions();
-   /* 	
-	logger.info("****************************************************************888");
-	for (Transactions t:transactions)
-	{
-		
-	logger.info("Date"+t.getCashOut().getCashOutDate());
-		logger.info("Amount"+t.getAmount());
-		
-	
-	}*/
-	return transactions;
-    	
-    	
+
+    private List<Transactions> getFilteredTrans(String fromDate, String toDate) throws ParseException {
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
+
+        Date date1 = formatter.parse(fromDate);
+        Date date2 = formatter.parse(toDate);
+        List<Transactions> transactions = transactionService.getFilteredTrans(date1, date2);
+        logger.info("****************************************************************888");
+        for (Transactions t : transactions) {
+
+            logger.info("Amount" + t.getAmount());
+            // logger.info("ATM Location"+t.get);
+
+        }
+        return transactions;
+
     }
-    
-    private List<Transactions> getReloads()
-    {List<Transactions> reloads=	transactionService.getReloads();
-   /* 	
-	logger.info("****************************************************************888");
-	for (Transactions t:transactions)
-	{
-		
-	logger.info("Date"+t.getCashOut().getCashOutDate());
-		logger.info("Amount"+t.getAmount());
-		
-	
-	}*/
-	return reloads;
-    	
-    	
+
+    private List<Transactions> getTransactions() {
+        List<Transactions> transactions = transactionService.getTransactions();
+        /*
+         * logger.info("****************************************************************888");
+         * for (Transactions t:transactions)
+         * {
+         * 
+         * logger.info("Date"+t.getCashOut().getCashOutDate());
+         * logger.info("Amount"+t.getAmount());
+         * 
+         * 
+         * }
+         */
+        return transactions;
+
     }
-     
+
+    private List<Transactions> getReloads() {
+        List<Transactions> reloads = transactionService.getReloads();
+        /*
+         * logger.info("****************************************************************888");
+         * for (Transactions t:transactions)
+         * {
+         * 
+         * logger.info("Date"+t.getCashOut().getCashOutDate());
+         * logger.info("Amount"+t.getAmount());
+         * 
+         * 
+         * }
+         */
+        return reloads;
+
+    }
+
 }

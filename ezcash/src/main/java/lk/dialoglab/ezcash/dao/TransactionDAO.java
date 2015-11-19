@@ -1,11 +1,7 @@
 package lk.dialoglab.ezcash.dao;
 
-
-
-
 import java.util.Date;
 import java.util.List;
-
 
 import lk.dialoglab.ezcash.domain.Transactions;
 
@@ -19,9 +15,12 @@ import lk.dialoglab.ezcash.domain.Transactions;
  */
 public interface TransactionDAO extends GenericDAO<Transactions, Integer> {
 
-	public List<Transactions> getFilteredTrans(Date fromDate,Date toDate);
-	public List<Transactions> getTransactions();
-	public List<Transactions> getReloads();
-	public List<Transactions> getTransactionbyReloadid(int id);
+    public List<Transactions> getFilteredTrans(Date fromDate, Date toDate);
+
+    public List<Transactions> getTransactions();
+
+    public List<Transactions> getReloads();
+
+    public List<Transactions> getTransactionbyReloadid(int id);
 
 }

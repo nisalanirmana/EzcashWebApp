@@ -10,8 +10,6 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AssignedAtmDAOImpl extends GenericDAOImpl<AssignedAtm, Integer> implements
-AssignedAtmDAO {
-	
+public class AssignedAtmDAOImpl extends GenericDAOImpl<AssignedAtm, Integer> implements AssignedAtmDAO {
 
 }

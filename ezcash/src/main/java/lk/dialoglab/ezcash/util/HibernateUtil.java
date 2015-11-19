@@ -6,8 +6,6 @@
 
 package lk.dialoglab.ezcash.util;
 
-
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,60 +26,52 @@ import org.w3c.dom.Element;
 @Component
 public class HibernateUtil {
 
-	private static final SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
 
+    static {
+        try {
 
-	static {
-		try {
-	
+            Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 
-			Configuration configuration = new Configuration()
-					.configure("hibernate.cfg.xml");
+            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration
+                    .getProperties());
 
-			StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-					.applySettings(configuration.getProperties());
-			
-			sessionFactory = configuration.buildSessionFactory(builder.build());
-			
-		}
+            sessionFactory = configuration.buildSessionFactory(builder.build());
 
-		catch (Throwable ex) {
+        }
 
-			System.err.println("Initial SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}
-	}
+        catch (Throwable ex) {
 
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
 
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
 
-	
+    public static Session beginTransaction() {
+        Session hibernateSession = getSession();
+        hibernateSession.beginTransaction();
+        return hibernateSession;
+    }
 
+    public static void commitTransaction() {
+        getSession().getTransaction().commit();
 
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
+    }
 
-	public static Session beginTransaction() {
-		Session hibernateSession = getSession();
-		hibernateSession.beginTransaction();
-		return hibernateSession;
-	}
+    public static void rollbackTransaction() {
+        getSession().getTransaction().rollback();
+    }
 
-	public static void commitTransaction() {
-		getSession().getTransaction().commit();
-		
-	}
+    public static void closeSession() {
+        getSession().close();
+    }
 
-	public static void rollbackTransaction() {
-		getSession().getTransaction().rollback();
-	}
-
-	public static void closeSession() {
-		getSession().close();
-	}
-
-	public static Session getSession() {
-		Session hibernateSession = sessionFactory.getCurrentSession();
-		return hibernateSession;
-	}
+    public static Session getSession() {
+        Session hibernateSession = sessionFactory.getCurrentSession();
+        return hibernateSession;
+    }
 }

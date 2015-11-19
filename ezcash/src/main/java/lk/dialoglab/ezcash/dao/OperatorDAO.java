@@ -1,12 +1,7 @@
 package lk.dialoglab.ezcash.dao;
 
-
-
 import java.util.Date;
 import java.util.List;
-
-
-
 
 import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.Operator;
@@ -21,6 +16,6 @@ import lk.dialoglab.ezcash.domain.Operator;
  */
 public interface OperatorDAO extends GenericDAO<Operator, Integer> {
 
-	public List<Operator> getOperatorDropDownList();
+    public List<Operator> getOperatorDropDownList();
 
 }

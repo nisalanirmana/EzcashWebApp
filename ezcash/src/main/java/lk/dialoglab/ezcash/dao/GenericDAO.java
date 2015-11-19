@@ -24,7 +24,6 @@ import org.hibernate.Query;
 
 public interface GenericDAO<T, ID extends Serializable> {
 
-	
     /**
      * Save entity
      * 
@@ -32,7 +31,6 @@ public interface GenericDAO<T, ID extends Serializable> {
      */
     public void save(T entity);
 
-    
     /**
      * Update entity
      * 
@@ -63,7 +61,6 @@ public interface GenericDAO<T, ID extends Serializable> {
      */
     public T findOne(Query query);
 
-    
     /**
      * All the records of particular entity
      * 
