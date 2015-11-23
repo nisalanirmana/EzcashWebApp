@@ -45,5 +45,7 @@ public interface AtmService {
     public AssignedAtm findassignedatmoperatorbyid(int id);
 
     public void deleteassignedatmoperatorbyid(AssignedAtm assignedatm);
+    
+    public void setAtmStatus(String id);
 
 }

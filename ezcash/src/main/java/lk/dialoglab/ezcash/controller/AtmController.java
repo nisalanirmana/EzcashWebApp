@@ -112,6 +112,55 @@ public class AtmController {
 
     }
 
+    @RequestMapping(value = "/disableatm/{atmName}", method = RequestMethod.GET)
+    public String handlePost3(@PathVariable("atmName") String argument, @RequestParam String action, Model m)
+            throws IOException {
+        List<Atm> atmdetails = getAtmDetails(argument);
+        String AtmSerialNo = atmdetails.get(0).getSerialNo();
+        String sendingString = "##CMD,DISABLE," + AtmSerialNo;
+        System.out.println("Sending String:" + sendingString);
+        sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        String postData = sendingString;
+        URL url = new URL("http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "text/html");
+
+        // Write data
+        OutputStream os = connection.getOutputStream();
+        os.write(postData.getBytes());
+
+        os.close();
+        System.out.println("Sending ");
+        atmService.setAtmStatus(argument);
+        return "redirect:/" + argument;
+    }
+    
+    @RequestMapping(value = "/enableatm/{atmName}", method = RequestMethod.GET)
+    public String handlePost4(@PathVariable("atmName") String argument, @RequestParam String action, Model m)
+            throws IOException {
+        List<Atm> atmdetails = getAtmDetails(argument);
+        String AtmSerialNo = atmdetails.get(0).getSerialNo();
+        String sendingString = "##CMD,ENABLE," + AtmSerialNo;
+        System.out.println("Sending String:" + sendingString);
+        sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        String postData = sendingString;
+        URL url = new URL("http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "text/html");
+
+        // Write data
+        OutputStream os = connection.getOutputStream();
+        os.write(postData.getBytes());
+
+        os.close();
+        System.out.println("Sending ");
+        return "redirect:/" + argument;
+    }
+    
     @RequestMapping(value = "/unlockatm/{atmName}", method = RequestMethod.GET)
     public String handlePost1(@PathVariable("atmName") String argument, @RequestParam String action, Model m)
             throws IOException {
@@ -119,14 +168,14 @@ public class AtmController {
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
         String sendingString = "##CMD,UNLOCK," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "http://203.189.68.250:80/ezcashtest/webMsg/");
+        sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
         String postData = sendingString;
-        URL url = new URL("http://203.189.68.250:80/ezcashtest/webMsg/");
+        URL url = new URL("http://203.189.68.250:80/ezcashATMserver/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "text/html");
-
+        
         // Write data
         OutputStream os = connection.getOutputStream();
         os.write(postData.getBytes());
@@ -143,9 +192,9 @@ public class AtmController {
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
         String sendingString = "##CMD,REBOOT," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "http://203.189.68.250:80/ezcashtest/webMsg/");
+        sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
         String postData = sendingString;
-        URL url = new URL("http://203.189.68.250:80/ezcashtest/webMsg/");
+        URL url = new URL("http://203.189.68.250:80/ezcashATMserver/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");

@@ -61,5 +61,7 @@ public class AlertsController {
         alertService.deletealertbyid(alert);
         return "redirect:/alerts";
     }
+    
+    
 
 }

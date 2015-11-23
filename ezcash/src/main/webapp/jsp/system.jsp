@@ -100,6 +100,16 @@ $(".text_div").text(function () {
 });
 </script>
 	<script>
+$(".text_div").text(function () { 
+    return $(this).text().replace("2", "Disabled-Failed"); 
+});
+</script>
+	<script>
+$(".text_div").text(function () { 
+    return $(this).text().replace("3", "Disabled-Connected"); 
+});
+    </script>
+	<script>
 $( "div:contains('Failed')" ).css( "background-color", "#FF3366" );
 </script>
 

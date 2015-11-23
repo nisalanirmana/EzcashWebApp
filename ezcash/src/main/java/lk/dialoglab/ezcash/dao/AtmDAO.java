@@ -21,5 +21,7 @@ public interface AtmDAO extends GenericDAO<Atm, Integer> {
     public List<Atm> getAtmDetails(String Atmname);
 
     public int getAtmLocationId(String Atmlocation);
+    
+    public void setAtmStatus(String id);
 
 }

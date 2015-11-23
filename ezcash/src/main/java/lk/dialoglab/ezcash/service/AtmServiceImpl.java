@@ -433,4 +433,17 @@ public class AtmServiceImpl implements AtmService {
         }
     }
 
+    @Override
+    public void setAtmStatus(String id) {
+        try {
+            HibernateUtil.beginTransaction();
+            System.out.println("Updated Test");
+            atmDao.setAtmStatus(id);;
+            System.out.println("Updated");
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+        }
+    }
 }

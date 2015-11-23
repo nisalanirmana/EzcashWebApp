@@ -35,6 +35,14 @@ public class AtmDAOImpl extends GenericDAOImpl<Atm, Integer> implements AtmDAO {
 
         return atmlist;
     }
+    
+    public void setAtmStatus(String id) {
+       // String hql = "from Atm a where a.atmName = :d1";
+        String hql = "update Atm set status = :d1 where atmName = :id";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", "3").setParameter("id", id);
+        query.executeUpdate();
+        System.out.println("Status set");
+    }
 
     @Override
     public int getAtmLocationId(String Atmlocation) {

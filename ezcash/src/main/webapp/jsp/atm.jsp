@@ -100,7 +100,14 @@
 	</table>
 
 
-
+	<form action="<c:url value="/disableatm/${AtmTab}" />" method="GET">
+		<input type="submit" name="action" value="Disable ATM" />
+	</form>
+	<br>
+		<form action="<c:url value="/enableatm/${AtmTab}" />" method="GET">
+		<input type="submit" name="action" value="Enable ATM" />
+	</form>
+	<br>
 	<form action="<c:url value="/unlockatm/${AtmTab}" />" method="GET">
 		<input type="submit" name="action" value="Unlock ATM" />
 	</form>
