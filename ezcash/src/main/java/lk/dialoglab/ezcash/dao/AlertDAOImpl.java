@@ -1,9 +1,11 @@
 package lk.dialoglab.ezcash.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.domain.Atm;
+import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.util.HibernateUtil;
 
 import org.hibernate.Query;
@@ -18,6 +20,19 @@ public class AlertDAOImpl extends GenericDAOImpl<Alerts, Integer> implements Ale
         List<Alerts> alerts = findMany(query);
 
         return alerts;
+
+    }
+    
+    public List<Alerts> getFilteredAlerts(Date fromDate, Date toDate) {
+        String hql = "from Alerts t where t.triggeredTime>:d1 and t.triggeredTime<:d2 order by t.triggeredTime desc";
+        // String hql =
+        // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate)
+                .setParameter("d2", toDate);
+
+        List<Alerts> alerts = findMany(query);
+
+        return alerts ;
 
     }
 

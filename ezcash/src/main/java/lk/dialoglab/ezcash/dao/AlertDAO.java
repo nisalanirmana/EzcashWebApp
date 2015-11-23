@@ -5,6 +5,7 @@ import java.util.List;
 
 import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.domain.Atm;
+import lk.dialoglab.ezcash.domain.Transactions;
 
 /**
  * Define methods to connect with Event Class and handle database operations.
@@ -17,5 +18,6 @@ import lk.dialoglab.ezcash.domain.Atm;
 public interface AlertDAO extends GenericDAO<Alerts, Integer> {
 
     public List<Alerts> getAlerts();
+    public List<Alerts> getFilteredAlerts(Date fromDate, Date toDate);
 
 }

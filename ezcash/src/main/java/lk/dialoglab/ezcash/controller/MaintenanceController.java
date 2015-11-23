@@ -24,12 +24,9 @@ import javax.servlet.http.HttpSession;
 import lk.dialoglab.ezcash.dao.AtmDAO;
 import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.AtmReload;
-import lk.dialoglab.ezcash.domain.Didmap;
 import lk.dialoglab.ezcash.domain.Operator;
 import lk.dialoglab.ezcash.domain.Transactions;
-import lk.dialoglab.ezcash.dto.DidmapDto;
 import lk.dialoglab.ezcash.dto.ReloadDto;
-import lk.dialoglab.ezcash.service.DidmapService;
 import lk.dialoglab.ezcash.service.ReloadService;
 import lk.dialoglab.ezcash.service.TransactionService;
 
@@ -57,8 +54,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MaintenanceController {
 
-    @Autowired
-    DidmapService didmapService;
+
 
     @Autowired
     ReloadService reloadService;

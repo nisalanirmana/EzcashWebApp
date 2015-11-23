@@ -1,29 +1,34 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!doctype html>
-<html lang="en">
-<head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href=" <c:url value="/resources/css/table.css" />"
 	rel="stylesheet">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Alerts</title>
+<link
+	href=" <c:url value="/resources/css/ui-lightness/jquery-ui-1.7.2.custom.css" />"
+	rel="stylesheet">
+<script src="<c:url value="/resources/js/jquery-1.3.2.min.js" />"></script>
+<script
+	src="<c:url value="/resources/js/jquery-ui-1.7.2.custom.min.js" />"></script>
+<script src="<c:url value="/resources/js/timepicker.js" />"></script>
 <link href=" <c:url value="/resources/themes/blue/style.css" />"
 	rel="stylesheet">
-
-<!-- Auto Refresh JSP Pages -->
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-
-<script>
-<!-- Auto Refresh Function -->
- function autoRefresh()
-{
-	window.location = window.location.href;
-}
-
- setInterval('autoRefresh()', 10000); // this will reload page after every 5 secounds; Method I
+<script type="text/javascript">
+$(function() {
+    $('.datetime').datepicker({
+    	duration: '',
+        showTime: true,
+        dateFormat:"dd-mm-yy",
+		time24h: true
+     });
+});
 </script>
 </head>
 <body>
@@ -33,7 +38,29 @@
 	<h3
 		style="margin-left: 2px; font-family: Palatino Linotype; text-align: left;">ATM
 		Alerts</h3>
+		<form:form action="getdatesalerts" method="post">
 
+			<table class="tablesorter">
+
+
+				<tr>
+
+					<td>Start Date</td>
+					<td><input type="text" class="datetime" name="fromDate"></td>
+
+					<td>End Date</td>
+					<td><input type="text" class="datetime" name="toDate"></td>
+					<!--  
+				<td>Atm Name</td>
+				<td><input type="text" class="text"  name="atmName"></td>
+			-->
+					<td><input type="submit" value="Filter Alerts">
+					</td>
+				</tr>
+
+
+			</table>
+		</form:form>
 
 	<table class="tablesorter1">
 	    <col width="50">

@@ -1,5 +1,9 @@
 package lk.dialoglab.ezcash.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,12 +12,14 @@ import javax.servlet.http.HttpSession;
 import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.domain.AtmReload;
 import lk.dialoglab.ezcash.domain.Transactions;
+import lk.dialoglab.ezcash.dto.Period;
 import lk.dialoglab.ezcash.service.AlertService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,6 +68,39 @@ public class AlertsController {
         return "redirect:/alerts";
     }
     
-    
+    @RequestMapping(value = "/getdatesalerts", method = RequestMethod.POST)
+    public ModelAndView getalertsdates(Period period, BindingResult result) throws ParseException {
+
+        System.out.println("-------------------------------------------------------------------------------Start Date:"
+                + period.getFromDate() + "End Date:" + period.getToDate() + period.getAtmName());
+
+        logger.info("Get Dates");
+
+        List<Alerts> alerts = getFilteredAlerts(period.getFromDate(), period.getToDate());
+        ModelAndView model = new ModelAndView("alerts");
+        model.addObject("alerts", alerts);
+        //model.addObject("reloads", transactions);
+
+        return model;
+
+    }
+
+    private List<Alerts> getFilteredAlerts(String fromDate, String toDate) throws ParseException {
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
+
+        Date date1 = formatter.parse(fromDate);
+        Date date2 = formatter.parse(toDate);
+        List<Alerts> alerts = alertService.getFilteredAlerts(date1, date2);
+        logger.info("****************************************************************888");
+        for (Alerts t : alerts) {
+
+          //  logger.info("Amount" + t.getAmount());
+            // logger.info("ATM Location"+t.get);
+
+        }
+        return alerts;
+
+    }   
 
 }
