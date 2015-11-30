@@ -24,6 +24,7 @@ public class WelcomeController {
 
     @RequestMapping("welcome")
     public String welcome() {
+        logger.info("Welcome-Login Page");
         return "welcome";
     }
 
@@ -31,27 +32,20 @@ public class WelcomeController {
     public String authenticate(Login login, BindingResult result, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-
-        System.out.println("User Name:" + login.getName() + "Password:" + login.getPassword());
         String passwd = "";
         passwd = operatorService.getWebUserPassword(login.getName());
-        System.out.println("password from db " + passwd);
-        System.out.println("password from user " + login.getPassword());
         if (passwd == null) {
-            System.out.println("Empty " + passwd);
-            session.setAttribute("Msg", "User Not Found");
+         logger.error("User Name: "+login.getName()+" Not Found");
         } else {
 
             if (passwd.equals(login.getPassword())) {
-                logger.info("User Authentication");
-
-                System.out.println("Authenticated");
+        logger.info("User Name: "+login.getName()+" Authenticated Successfully");
                 session.setAttribute("Msg", null);
                 session.setAttribute("LoginUser", login.getName());
                 return "redirect:/authenticated";
 
             } else {
-                System.out.println("Not Authenticated");
+        logger.error("User Name: "+login.getName()+" Wrong Password");
                 session.setAttribute("Msg", "User Name or Password Incorrect");
                 return "redirect:/welcome";
             }

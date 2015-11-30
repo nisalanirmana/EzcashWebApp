@@ -64,7 +64,7 @@
 			</tr>
 			<tr>
 				<th>Status</th>
-				<td>${atm.status}</td>
+				<td><div class="text_div">${atm.status}</div></td>
 			</tr>
 			<tr>
 				<th>Live Packet Time</th>
@@ -86,6 +86,11 @@
 				<th>Reject2 (Rs.)</th>
 				<td>${atm.reject2}</td>
 			</tr>
+			
+				<tr>
+				<th>Battery Level</th>
+				<td>${atm.batLevel}</td>
+			</tr>
 
 		</c:forEach>
 
@@ -99,22 +104,29 @@
 		</c:forEach>
 	</table>
 
-
+<table>
+<tr><td>
 	<form action="<c:url value="/disableatm/${AtmTab}" />" method="GET">
-		<input type="submit" name="action" value="Disable ATM" />
+		<input type='${Disablebtntype}' name="action" value="" style="background-image:url('<c:url value='/resources/img/disable.png'/>');  width: 55px; height: 55px; background-repeat: no-repeat; background-size: 100% 100%;  cursor:pointer;"/> 
 	</form>
-	<br>
-		<form action="<c:url value="/enableatm/${AtmTab}" />" method="GET">
-		<input type="submit" name="action" value="Enable ATM" />
+	</td>
+	<td>
+	<form action="<c:url value="/enableatm/${AtmTab}" />" method="GET">
+		<input type='${Enablebtntype}' name="action" value="" style="background-image:url('<c:url value='/resources/img/enable.png'/>');  width: 55px; height: 55px; background-repeat: no-repeat; background-size: 100% 100%;  cursor:pointer;"/>
 	</form>
-	<br>
+	</td>
+	<td>
 	<form action="<c:url value="/unlockatm/${AtmTab}" />" method="GET">
-		<input type="submit" name="action" value="Unlock ATM" />
+		<input type="submit" name="action" value="" style="background-image:url('<c:url value='/resources/img/unlock.png'/>');  width: 55px; height: 55px; background-repeat: no-repeat; background-size: 100% 100%;  cursor:pointer;"/>
 	</form>
-	<br>
+	</td>
+	<td>
 	<form action="<c:url value="/rebootatm/${AtmTab}" />" method="GET">
-		<input type="submit" name="action" value="Reboot ATM" />
+		<input type="submit" name="action" value="" style="background-image:url('<c:url value='/resources/img/restart.png'/>');  width: 55px; height: 55px; background-repeat: no-repeat; background-size: 100% 100%;  cursor:pointer;"/>
 	</form>
+	</td>
+	</tr>
+	</table>
 	<h3
 		style="margin-left: 2px; font-family: Palatino Linotype; text-align: left;">Alerts</h3>
 
@@ -142,7 +154,6 @@
 
 
 
-
 	<script>
 $(".text_div").text(function () {
     return $(this).text().replace("1", "Connected"); 
@@ -154,8 +165,17 @@ $(".text_div").text(function () {
 });
 </script>
 	<script>
-$( "div:contains('Failed')" ).css( "background-color", "#FF3366" );
+$(".text_div").text(function () { 
+    return $(this).text().replace("2", "Disabled-Failed"); 
+});
 </script>
+	<script>
+$(".text_div").text(function () { 
+    return $(this).text().replace("3", "Disabled-Connected"); 
+});
+    </script>
+    
+
 
 </body>
 </html>

@@ -22,6 +22,7 @@ import lk.dialoglab.ezcash.domain.AtmLocation;
 import lk.dialoglab.ezcash.domain.AtmReload;
 import lk.dialoglab.ezcash.domain.CashOut;
 import lk.dialoglab.ezcash.dto.AtmDto;
+import lk.dialoglab.ezcash.dto.AtmEditList;
 import lk.dialoglab.ezcash.dto.AtmLocationDto;
 import lk.dialoglab.ezcash.dto.ReloadDto;
 import lk.dialoglab.ezcash.service.AtmService;
@@ -82,6 +83,13 @@ public class AtmController {
         // model.put("atmlist1", atmlist);
         HttpSession session = request.getSession();
         session.setAttribute("AtmTab", argument);
+        String disblebtntype=AtmEditList.getDisablebtntype();
+        System.out.println("Atm Status dis final "+ disblebtntype);
+        session.setAttribute("Disablebtntype",disblebtntype);
+        
+        String enablebtntype=AtmEditList.getEnablebtntype();
+        System.out.println("Atm Status en final "+ enablebtntype);
+        session.setAttribute("Enablebtntype",enablebtntype);
         logger.info("returning the model");
 
         Map<String, Object> model = new HashMap<String, Object>();
@@ -100,13 +108,14 @@ public class AtmController {
     private List<Atm> getSystemTable() {
         List<Atm> atmlist = atmService.getAtmList();
         logger.info("****************************************************************888");
-
         return atmlist;
 
     }
 
     private List<Atm> getAtmDetails(String atmname) {
         List<Atm> atmlist = atmService.getAtmDetails(atmname);
+        setEnableBtnStatus(atmlist);
+        setDisableBtnStatus(atmlist);
         logger.info("****************************************************************888");
         return atmlist;
 
@@ -117,6 +126,8 @@ public class AtmController {
             throws IOException {
         List<Atm> atmdetails = getAtmDetails(argument);
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
+        setDisableBtnStatus(atmdetails);
+        
         String sendingString = "##CMD,DISABLE," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
         sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
@@ -142,6 +153,7 @@ public class AtmController {
             throws IOException {
         List<Atm> atmdetails = getAtmDetails(argument);
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
+        setEnableBtnStatus(atmdetails);
         String sendingString = "##CMD,ENABLE," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
         sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
@@ -224,6 +236,51 @@ public class AtmController {
 
         return result.getBody();
 
+    }
+    
+    private void setDisableBtnStatus(List<Atm> atmlist){
+        String AtmStatus = atmlist.get(0).getStatus();
+        System.out.println("Atm Status from Dis "+ AtmStatus);
+        switch(AtmStatus){
+        
+        case "0": AtmEditList.setDisablebtntype("hidden");
+        break;
+        case "1": AtmEditList.setDisablebtntype("submit");
+        break;
+        case "2": AtmEditList.setDisablebtntype("hidden");
+        break;
+        case "3": AtmEditList.setDisablebtntype("hidden");
+        break;
+            
+        }
+        String disblebtntype=AtmEditList.getDisablebtntype();
+        System.out.println("Atm Status dis frm dis "+ disblebtntype);
+        
+        String enablebtntype=AtmEditList.getEnablebtntype();
+        System.out.println("Atm Status en frm dis "+ enablebtntype);
+    }
+    
+    private void setEnableBtnStatus(List<Atm> atmlist){
+        String AtmStatus = atmlist.get(0).getStatus();
+        System.out.println("Atm Status from en "+ AtmStatus);
+        switch(AtmStatus){
+        
+        case "0": AtmEditList.setEnablebtntype("hidden");
+        break;
+        case "1": AtmEditList.setEnablebtntype("hidden");
+        break;
+        case "2": AtmEditList.setEnablebtntype("hidden");
+        break;
+        case "3": AtmEditList.setEnablebtntype("submit");
+        break;
+            
+        }
+        
+        String disblebtntype=AtmEditList.getDisablebtntype();
+        System.out.println("Atm Status dis frm en "+ disblebtntype);
+        
+        String enablebtntype=AtmEditList.getEnablebtntype();
+        System.out.println("Atm Status en frm en "+ enablebtntype);
     }
 
 }

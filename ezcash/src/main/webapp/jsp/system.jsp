@@ -62,6 +62,7 @@
 				<th>Name</th>
 				<th>Location</th>
 				<th>Status</th>
+				<th>Battary Level</th>
 				<th>Live Packet Time</th>
 				<th>Tray 1(Rs.)</th>
 				<th>Tray 2 (Rs.)</th>
@@ -78,6 +79,7 @@
 					<td>${atm.atmName}</td>
 					<td>${atm.atmLocation.locationName}</td>
 					<td><div class="text_div">${atm.status}</div></td>
+					<td>${atm.batLevel}</td>
 					<td>${atm.livePktTime}</td>
 					<td>${atm.tray1}</td>
 					<td>${atm.tray2}</td>

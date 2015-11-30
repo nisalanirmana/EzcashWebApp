@@ -57,20 +57,20 @@ public class Atm implements java.io.Serializable {
     public Atm() {
     }
 
-    public Atm(Date livePktTime, int tray1, int tray2, int reject1, int reject2, String atmCode, int battery) {
+    public Atm(Date livePktTime, int tray1, int tray2, int reject1, int reject2, String atmCode) {
         this.livePktTime = livePktTime;
         this.tray1 = tray1;
         this.tray2 = tray2;
         this.reject1 = reject1;
         this.reject2 = reject2;
         this.atmCode = atmCode;
-        this.batLevel = battery;
+      // this.batLevel= battery;
 
     }
 
     public Atm(AtmLocation atmLocation, String atmName, Date installedDate, String serialNo, String status,
             String alert, Date livePktTime, int tray1, int tray2, int reject1, int reject2, String atmCode,
-            Integer tray1NoteValue, Integer tray2NoteValue, Integer BatVal, Set<CashOut> cashOuts,
+            Integer tray1NoteValue, Integer tray2NoteValue, Integer batLevel, Set<CashOut> cashOuts,
             Set<Alerts> alertses, Set<AtmReload> atmReloads, Set<AssignedAtm> assignedAtms, Set<Notes> noteses) {
         this.atmLocation = atmLocation;
         this.atmName = atmName;
@@ -86,7 +86,7 @@ public class Atm implements java.io.Serializable {
         this.tray1NoteValue = tray1NoteValue;
         this.tray2NoteValue = tray2NoteValue;
         this.atmReloads = atmReloads;
-        this.batLevel = BatVal;
+         this.batLevel = batLevel;
         this.cashOuts = cashOuts;
         this.alertses = alertses;
         this.atmReloads = atmReloads;
@@ -208,13 +208,13 @@ public class Atm implements java.io.Serializable {
         this.reject2 = reject2;
     }
 
-    @Column(name = "batteryLevel")
-    public Integer getbatteryLevel() {
+    @Column(name= "batteryLevel")
+    public Integer getbatLevel() {
         return this.batLevel;
     }
-
-    public void setbatteryLevel(Integer batteryLevel) {
-        this.batLevel = batteryLevel;
+    
+    public void setbatLevel(Integer batLevel) {
+        this.batLevel = batLevel;
     }
 
     @Column(name = "atm_code", nullable = false, length = 9)

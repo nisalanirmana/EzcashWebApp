@@ -248,7 +248,7 @@ public class AtmServiceImpl implements AtmService {
             atm.setReject2(0);
 
             // bat level
-            atm.setbatteryLevel(0);
+            atm.setbatLevel(0);
 
             atmDao.save(atm);
 
@@ -308,7 +308,7 @@ public class AtmServiceImpl implements AtmService {
             atm.setReject2(atmdto.getReject2());
 
             // bat level
-            atm.setbatteryLevel(atmdto.getBatLevel());
+            atm.setbatLevel(atmdto.getBatLevel());
 
             atmDao.update(atm);
             System.out.println("Updated");

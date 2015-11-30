@@ -197,7 +197,7 @@ public class AtmListContoller {
         logger.info("Edit Atm Location");
         atmdto.setInstalledDate(atmService.findatmbyid(atmdto.getAtmId()).getInstalledDate());
         atmdto.setLivePktTime(atmService.findatmbyid(atmdto.getAtmId()).getLivePktTime());
-        atmdto.setBatLevel(atmService.findatmbyid(atmdto.getAtmId()).getbatteryLevel());
+        atmdto.setBatLevel(atmService.findatmbyid(atmdto.getAtmId()).getbatLevel());
         atmdto.setReject1(atmService.findatmbyid(atmdto.getAtmId()).getReject1());
         atmdto.setReject2(atmService.findatmbyid(atmdto.getAtmId()).getReject2());
         atmdto.setStatus(atmService.findatmbyid(atmdto.getAtmId()).getStatus());

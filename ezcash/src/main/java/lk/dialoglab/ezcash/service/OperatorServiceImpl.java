@@ -1,27 +1,16 @@
 package lk.dialoglab.ezcash.service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
+import java.util.List;
 import lk.dialoglab.ezcash.dao.OperatorDAO;
 import lk.dialoglab.ezcash.dao.WebUserDAO;
-import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.util.HibernateUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import lk.dialoglab.ezcash.domain.Atm;
-import lk.dialoglab.ezcash.domain.AtmLocation;
-import lk.dialoglab.ezcash.domain.AtmReload;
 import lk.dialoglab.ezcash.domain.Operator;
 import lk.dialoglab.ezcash.domain.UserType;
 import lk.dialoglab.ezcash.domain.WebUser;
-import lk.dialoglab.ezcash.dto.AtmLocationDto;
 import lk.dialoglab.ezcash.dto.OperatorDto;
-import lk.dialoglab.ezcash.dto.ReloadDto;
 import lk.dialoglab.ezcash.dto.WebUserDto;
 
 @Service

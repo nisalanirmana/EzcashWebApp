@@ -17,9 +17,6 @@ public class WebUserDAOImpl extends GenericDAOImpl<WebUser, Integer> implements 
 
         String hql = "select distinct w.password from WebUser w where w.userName = :d1";
         Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", username);
-
-        System.out.println(" Query TransactionDAOImpl " + query);
-
         return (String) query.uniqueResult();
 
     }
