@@ -23,9 +23,9 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
         Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate)
                 .setParameter("d2", toDate);
-
+        System.out.println(" getFilteredTrans() Start ");
         List<Transactions> transactions = findMany(query);
-
+        System.out.println(" getFilteredTrans() END ");
         return transactions;
 
     }
@@ -36,9 +36,9 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
         Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate)
                 .setParameter("d2", toDate);
-
+        System.out.println(" getFilteredReloads() Start ");
         List<Transactions> reloads = findMany(query);
-
+        System.out.println(" getFilteredReloads() END ");
         return reloads;
 
     }
@@ -58,10 +58,9 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         String hql = "from Transactions t order by t.cashOut.cashOutDate desc";
         Query query = HibernateUtil.getSession().createQuery(hql);
 
-        System.out.println(" Query TransactionDAOImpl " + query);
-
+        System.out.println(" getTransactions() Start ");
         List<Transactions> transactions = findMany(query);
-
+        System.out.println(" getTransactions() END ");
         return transactions;
 
     }
@@ -73,10 +72,9 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         String hql = "from Transactions t order by t.atmReload.taskCreatedTime desc";
         Query query = HibernateUtil.getSession().createQuery(hql);
 
-        System.out.println(" Query TransactionDAOImpl " + query);
-        System.out.println("test1");
+        System.out.println(" getReloads() Start ");
         List<Transactions> reloads = findMany(query);
-        System.out.println("test2");
+        System.out.println(" getReloads() END ");
         return reloads;
 
     }
@@ -86,9 +84,9 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         System.out.println("Atm Name DAO " + id);
         String hql = "from Transactions a where a.atmReload.reloadId = :d1";
         Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", id);
-
+        System.out.println(" getTransactionbyReloadid() Start ");
         List<Transactions> transactions = findMany(query);
-
+        System.out.println(" getTransactionbyReloadid() END ");
         return transactions;
     }
 

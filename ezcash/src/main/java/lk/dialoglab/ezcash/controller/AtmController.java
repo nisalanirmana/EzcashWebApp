@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,9 @@ import lk.dialoglab.ezcash.dto.AtmEditList;
 import lk.dialoglab.ezcash.dto.AtmLocationDto;
 import lk.dialoglab.ezcash.dto.ReloadDto;
 import lk.dialoglab.ezcash.service.AtmService;
+
+
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,8 +68,10 @@ public class AtmController {
         System.out.println("Atm Name " + argument);
         List<Atm> atmlist = getSystemTable();
         List<Atm> atmdetails = getAtmDetails(argument);
-        // Set<AssignedAtm> assignatmlist=atmdetails.get(0).getAssignedAtms();
-        // Set<Alerts> atmalerts=atmdetails.get(0).getAlertses();
+        Set<AssignedAtm> assignatmlist=atmdetails.get(0).getAssignedAtms();
+        List<Alerts> topatmalertlist = getTopAtmAlerts(argument);
+        //List<CashOut> topatmcashoutlist = getTopAtmCashOuts(argument);
+
         /*
          * for (Alerts a:atmalerts)
          * {
@@ -83,20 +90,27 @@ public class AtmController {
         // model.put("atmlist1", atmlist);
         HttpSession session = request.getSession();
         session.setAttribute("AtmTab", argument);
+        
         String disblebtntype=AtmEditList.getDisablebtntype();
-        System.out.println("Atm Status dis final "+ disblebtntype);
         session.setAttribute("Disablebtntype",disblebtntype);
         
         String enablebtntype=AtmEditList.getEnablebtntype();
-        System.out.println("Atm Status en final "+ enablebtntype);
         session.setAttribute("Enablebtntype",enablebtntype);
+        
+        String rebootbtntype=AtmEditList.getRebootbtntype();
+        session.setAttribute("Rebootbtntype",rebootbtntype);
+        
+        String unlockbtntype=AtmEditList.getUnlockbtntype();
+        session.setAttribute("Unlockbtntype",unlockbtntype);
+        
         logger.info("returning the model");
 
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("atmlist1", atmlist);
         model.put("atm", atmdetails);
-        // model.put("atmoperators", assignatmlist);
-        // model.put("atmalerts", atmalerts);
+        model.put("atmoperators", assignatmlist);
+        model.put("atmalerts", topatmalertlist);
+      // model.put("atmcashouts", topatmcashoutlist);
 
         // model.put("userdetails", userdetails);
         // and so on
@@ -105,6 +119,7 @@ public class AtmController {
 
     }
 
+    
     private List<Atm> getSystemTable() {
         List<Atm> atmlist = atmService.getAtmList();
         logger.info("****************************************************************888");
@@ -116,9 +131,33 @@ public class AtmController {
         List<Atm> atmlist = atmService.getAtmDetails(atmname);
         setEnableBtnStatus(atmlist);
         setDisableBtnStatus(atmlist);
+        setRebootBtnStatus(atmlist);
+        setUnlockBtnStatus(atmlist);
         logger.info("****************************************************************888");
         return atmlist;
 
+    }
+    
+    private List<Alerts> getTopAtmAlerts(String atmname){
+        List<Atm> atmdetails = getAtmDetails(atmname);
+        Set<Alerts> atmalerts=atmdetails.get(0).getAlertses();
+        List<Alerts> atmalertslist = new ArrayList<Alerts>(atmalerts);
+        Collections.sort(atmalertslist,new Comparator<Alerts>(){ public int compare(Alerts lhs, Alerts rhs){return(rhs.getAlertId().compareTo(lhs.getAlertId()));}});
+        if(atmalertslist.size()>11){
+        atmalertslist.subList(10,atmalertslist.size()).clear();
+        }
+        return atmalertslist;
+    }
+    
+    private List<CashOut> getTopAtmCashOuts(String atmname){
+        List<Atm> atmdetails = getAtmDetails(atmname);
+        Set<CashOut> atmcashouts=atmdetails.get(0).getCashOuts();
+        List<CashOut> atmcashoutslist = new ArrayList<CashOut>(atmcashouts);
+        Collections.sort( atmcashoutslist,new Comparator<CashOut>(){ public int compare(CashOut lhs, CashOut rhs){return(rhs.getCashOutId().compareTo(lhs.getCashOutId()));}});
+        if(atmcashoutslist.size()>11){
+            atmcashoutslist.subList(10,atmcashoutslist.size()).clear();
+        }
+        return atmcashoutslist;
     }
 
     @RequestMapping(value = "/disableatm/{atmName}", method = RequestMethod.GET)
@@ -272,6 +311,52 @@ public class AtmController {
         case "2": AtmEditList.setEnablebtntype("hidden");
         break;
         case "3": AtmEditList.setEnablebtntype("submit");
+        break;
+            
+        }
+        
+        String disblebtntype=AtmEditList.getDisablebtntype();
+        System.out.println("Atm Status dis frm en "+ disblebtntype);
+        
+        String enablebtntype=AtmEditList.getEnablebtntype();
+        System.out.println("Atm Status en frm en "+ enablebtntype);
+    }
+    
+    private void setRebootBtnStatus(List<Atm> atmlist){
+        String AtmStatus = atmlist.get(0).getStatus();
+        System.out.println("Atm Status from en "+ AtmStatus);
+        switch(AtmStatus){
+        
+        case "0": AtmEditList.setRebootbtntype("hidden");
+        break;
+        case "1": AtmEditList.setRebootbtntype("submit");
+        break;
+        case "2": AtmEditList.setRebootbtntype("hidden");
+        break;
+        case "3": AtmEditList.setRebootbtntype("submit");
+        break;
+            
+        }
+        
+        String disblebtntype=AtmEditList.getDisablebtntype();
+        System.out.println("Atm Status dis frm en "+ disblebtntype);
+        
+        String enablebtntype=AtmEditList.getEnablebtntype();
+        System.out.println("Atm Status en frm en "+ enablebtntype);
+    }
+    
+    private void setUnlockBtnStatus(List<Atm> atmlist){
+        String AtmStatus = atmlist.get(0).getStatus();
+        System.out.println("Atm Status from en "+ AtmStatus);
+        switch(AtmStatus){
+        
+        case "0": AtmEditList.setUnlockbtntype("hidden");
+        break;
+        case "1": AtmEditList.setUnlockbtntype("submit");
+        break;
+        case "2": AtmEditList.setUnlockbtntype("hidden");
+        break;
+        case "3": AtmEditList.setUnlockbtntype("submit");
         break;
             
         }

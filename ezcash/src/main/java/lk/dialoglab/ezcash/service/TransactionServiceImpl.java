@@ -24,12 +24,9 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transactions> transactions = null;
         try {
             HibernateUtil.beginTransaction();
-            // transactions = transactionDao.findAll(Transactions.class);
+           
             transactions = transactionDao.getTransactions();
 
-            System.out.println("Transaction amount" + transactions.get(1).getAmount());
-            System.out.println("Cashout date" + transactions.get(1).getCashOut().getCashOutDate());
-            // System.out.println("Transaction amount"+transactions.get(1).getAtmReload().getReloadId());
 
             HibernateUtil.commitTransaction();
         } catch (Exception e) {
@@ -49,9 +46,9 @@ public class TransactionServiceImpl implements TransactionService {
             // transactions = transactionDao.findAll(Transactions.class);
             reloads = transactionDao.getReloads();
 
-            System.out.println("Transaction amount" + reloads.get(2).getTray1());
-            System.out.println("Transaction amount" + reloads.get(2).getTray2());
-            System.out.println("Cashout date" + reloads.get(2).getAtmReload().getReloadEndTime());
+          //  System.out.println("Transaction amount" + reloads.get(2).getTray1());
+         //   System.out.println("Transaction amount" + reloads.get(2).getTray2());
+           // System.out.println("Cashout date" + reloads.get(2).getAtmReload().getReloadEndTime());
             // System.out.println("Transaction amount"+transactions.get(1).getAtmReload().getReloadId());
 
             HibernateUtil.commitTransaction();

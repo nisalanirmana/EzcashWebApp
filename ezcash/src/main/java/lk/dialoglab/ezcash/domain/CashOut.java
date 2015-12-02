@@ -52,83 +52,100 @@ public class CashOut implements java.io.Serializable {
         this.status = status;
         this.responseId = responseId;
         this.transactionses = transactionses;
+       
     }
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "cash_out_id", unique = true, nullable = false)
     public Integer getCashOutId() {
+        System.out.println("first "+System.currentTimeMillis());
         return this.cashOutId;
     }
 
     public void setCashOutId(Integer cashOutId) {
         this.cashOutId = cashOutId;
+        System.out.println("1 "+System.currentTimeMillis());
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "atm_id")
     public Atm getAtm() {
+        System.out.println("2 "+System.currentTimeMillis());
         return this.atm;
     }
 
     public void setAtm(Atm atm) {
+        System.out.println("3 "+System.currentTimeMillis());
         this.atm = atm;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "cash_out_date", length = 19)
     public Date getCashOutDate() {
+        System.out.println("4 "+System.currentTimeMillis());
         return this.cashOutDate;
     }
 
     public void setCashOutDate(Date cashOutDate) {
+        System.out.println("5 "+System.currentTimeMillis());
         this.cashOutDate = cashOutDate;
     }
 
     @Column(name = "phone_number", length = 45)
     public String getPhoneNumber() {
+        System.out.println("6 "+System.currentTimeMillis());
         return this.phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        System.out.println("7 "+System.currentTimeMillis());
     }
 
     @Column(name = "amount", precision = 7, scale = 4)
     public Double getAmount() {
+        System.out.println("8 "+System.currentTimeMillis());
         return this.amount;
     }
 
     public void setAmount(Double amount) {
+        System.out.println("9 "+System.currentTimeMillis());
         this.amount = amount;
     }
 
     @Column(name = "status")
     public Integer getStatus() {
+        System.out.println("10 "+System.currentTimeMillis());
         return this.status;
     }
 
     public void setStatus(Integer status) {
+        System.out.println("11 "+System.currentTimeMillis());
         this.status = status;
     }
 
     @Column(name = "response_id", length = 45)
     public String getResponseId() {
+        System.out.println("12 "+System.currentTimeMillis());
         return this.responseId;
     }
 
     public void setResponseId(String responseId) {
+        System.out.println("13 "+System.currentTimeMillis());
         this.responseId = responseId;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cashOut")
     public Set<Transactions> getTransactionses() {
+        System.out.println("14 "+System.currentTimeMillis());
         return this.transactionses;
     }
 
     public void setTransactionses(Set<Transactions> transactionses) {
         this.transactionses = transactionses;
+        System.out.println("last "+System.currentTimeMillis());
     }
 
 }

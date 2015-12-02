@@ -87,6 +87,7 @@ public class TransactionController {
         Date date1 = formatter.parse(fromDate);
         Date date2 = formatter.parse(toDate);
         List<Transactions> transactions = transactionService.getFilteredTrans(date1, date2);
+        /*
         logger.info("****************************************************************888");
         for (Transactions t : transactions) {
 
@@ -94,6 +95,7 @@ public class TransactionController {
             // logger.info("ATM Location"+t.get);
 
         }
+        */
         return transactions;
 
     }

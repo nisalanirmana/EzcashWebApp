@@ -34,13 +34,15 @@
 		Details</h3>
 
 
-	<table class="tablesorter">
+	<table class="tablesorter" border="1" >
+
+<tbody>
 
 		<c:forEach var="atm" items="${atm}">
 
 			<tr>
-				<th>Atm Id</th>
-				<td>${atm.atmId}</td>
+			<th >Atm Id</th> 
+			<td>${atm.atmId}</td>
 			</tr>
 			<tr>
 				<th>Name</th>
@@ -87,10 +89,19 @@
 				<td>${atm.reject2}</td>
 			</tr>
 			
+			<tr>
+				<th>Tray1 Note Value</th>
+				<td>${atm.tray1NoteValue}</td>
+			</tr>
+			
+			<tr>
+				<th>Tray2 Note Value</th>
+				<td>${atm.tray2NoteValue}</td>
+			</tr>
+			
 				<tr>
 				<th>Battery Level</th>
 				<td>${atm.batLevel}</td>
-			</tr>
 
 		</c:forEach>
 
@@ -102,6 +113,8 @@
 			</tr>
 
 		</c:forEach>
+		</tbody>
+
 	</table>
 
 <table>
@@ -117,12 +130,12 @@
 	</td>
 	<td>
 	<form action="<c:url value="/unlockatm/${AtmTab}" />" method="GET">
-		<input type="submit" name="action" value="" style="background-image:url('<c:url value='/resources/img/unlock.png'/>');  width: 55px; height: 55px; background-repeat: no-repeat; background-size: 100% 100%;  cursor:pointer;"/>
+		<input type='${Unlockbtntype}' name="action" value="" style="background-image:url('<c:url value='/resources/img/unlock.png'/>');  width: 55px; height: 55px; background-repeat: no-repeat; background-size: 100% 100%;  cursor:pointer;"/>
 	</form>
 	</td>
 	<td>
 	<form action="<c:url value="/rebootatm/${AtmTab}" />" method="GET">
-		<input type="submit" name="action" value="" style="background-image:url('<c:url value='/resources/img/restart.png'/>');  width: 55px; height: 55px; background-repeat: no-repeat; background-size: 100% 100%;  cursor:pointer;"/>
+		<input type='${Rebootbtntype}' name="action" value="" style="background-image:url('<c:url value='/resources/img/restart.png'/>');  width: 55px; height: 55px; background-repeat: no-repeat; background-size: 100% 100%;  cursor:pointer;"/>
 	</form>
 	</td>
 	</tr>
@@ -151,6 +164,31 @@
 			</c:forEach>
 		<tbody>
 	</table>
+	
+	<h3
+		style="margin-left: 2px; font-family: Palatino Linotype; text-align: left;">Cash Out</h3>
+
+	<table class="tablesorter">
+
+		<thead>
+			<tr>
+				<th>Cash Out Id</th>
+				<th>Date</th>
+				<th>Amount</th>
+				<th>Status</th>
+			</tr>
+		<thead>
+		<tbody>
+			<c:forEach var="cashout" items="${atmcashouts}">
+				<tr>
+					<td>${cashout.cashOutId}</td>
+					<td>${cashout.cashOutDate}</td>
+					<td>${cashout.amount}</td>
+					<td>${cashout.status}</td>
+				</tr>
+			</c:forEach>
+		<tbody>
+	</table>
 
 
 
@@ -174,6 +212,9 @@ $(".text_div").text(function () {
     return $(this).text().replace("3", "Disabled-Connected"); 
 });
     </script>
+    	<script>
+$( "div:contains('Failed')" ).css( "background-color", "#FF3366" );
+</script>
     
 
 

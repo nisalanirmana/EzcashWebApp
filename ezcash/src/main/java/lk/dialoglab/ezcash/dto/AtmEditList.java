@@ -13,6 +13,25 @@ public class AtmEditList {
     public static String taskvariableshow = "Add New";
     public static String disablebtntype = "submit" ;
     public static String enablebtntype = "submit" ;
+    public static String rebootbtntype = "submit" ;
+    public static String unlockbtntype = "submit" ;
+    
+
+    public static String getRebootbtntype() {
+        return rebootbtntype;
+    }
+
+    public static void setRebootbtntype(String rebootbtntype) {
+        AtmEditList.rebootbtntype = rebootbtntype;
+    }
+
+    public static String getUnlockbtntype() {
+        return unlockbtntype;
+    }
+
+    public static void setUnlockbtntype(String unlockbtntype) {
+        AtmEditList.unlockbtntype = unlockbtntype;
+    }
 
     public static String getDisablebtntype() {
         return disablebtntype;

@@ -29,7 +29,7 @@
 		Overview</h3>
 
 
-	<table class="tablesorter">
+	<table class="tablesorter" >
 		<thead>
 			<tr>
 				<th colspan="2">Action</th>
@@ -64,7 +64,7 @@
 	<h3
 		style="margin-left: 2px; font-family: Palatino Linotype; text-align: left;">Add/Edit
 		Atm</h3>
-	<table class="tablesorter">
+	<table class="tablesorter" >
 
 
 
@@ -290,6 +290,16 @@ $(".text_div").text(function () {
     return $(this).text().replace("0", "Failed"); 
 });
 </script>
+	<script>
+$(".text_div").text(function () { 
+    return $(this).text().replace("2", "Disabled-Failed"); 
+});
+</script>
+	<script>
+$(".text_div").text(function () { 
+    return $(this).text().replace("3", "Disabled-Connected"); 
+});
+    </script>
 	<script>
 $( "div:contains('Failed')" ).css( "background-color", "#FF3366" );
 </script>
