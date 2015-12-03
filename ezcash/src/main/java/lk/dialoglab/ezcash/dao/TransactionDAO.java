@@ -3,6 +3,7 @@ package lk.dialoglab.ezcash.dao;
 import java.util.Date;
 import java.util.List;
 
+import lk.dialoglab.ezcash.domain.CashOut;
 import lk.dialoglab.ezcash.domain.Transactions;
 
 /**
@@ -24,5 +25,7 @@ public interface TransactionDAO extends GenericDAO<Transactions, Integer> {
     public List<Transactions> getReloads();
 
     public List<Transactions> getTransactionbyReloadid(int id);
+    
+    
 
 }

@@ -110,6 +110,7 @@ public class MaintenanceController {
         // Navigation Menu css Change---------------
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "maintenance");
+        System.out.println("Session ID Transaction "+session.getId());
         // -----------------------------------------
         logger.info("maintenance page !");
         return model;
@@ -215,7 +216,7 @@ public class MaintenanceController {
     }
 
     @RequestMapping("/removeReloadTask/{id}")
-    public String removeReloadTask(@PathVariable("id") int id) {
+    public String removeReloadTask(@PathVariable("id") int id,HttpServletRequest request) {
         AtmReload atmreload = null;
         Transactions transactions = null;
         List<Transactions> transactionslist = null;
@@ -234,8 +235,15 @@ public class MaintenanceController {
 
             reloadService.deletereloadbyid(atmreload);
         }
-
-        return "redirect:/maintenance";
+        HttpSession session = request.getSession();
+        String menuSessionAttrib=session.getAttribute("MenuTab").toString();
+        String submenuSessionAttrib=session.getAttribute("AtmTab").toString();
+        if(menuSessionAttrib.equals("maintenance")){
+            return "redirect:/maintenance";
+        }
+        else
+        return "redirect:/"+submenuSessionAttrib;
+        
     }
 
 }

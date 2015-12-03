@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.AtmReload;
+import lk.dialoglab.ezcash.domain.CashOut;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.util.HibernateUtil;
 
@@ -54,6 +55,19 @@ public class ReloadDAOImpl extends GenericDAOImpl<AtmReload, Integer> implements
 
         return reloads;
 
+    }
+    
+    public List<AtmReload> getReloadsbyAtm(String atmname){
+        System.out.println(" getCashOutsbyATM()Start ");
+        
+        String hql = "from AtmReload a where a.atm.atmName = :d1 order by a.reloadId desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", atmname);
+        System.out.println(" getTransactionbyReloadid() Start ");
+        List<AtmReload> atmreloads = findMany(query);
+        
+        System.out.println(" getCashOutsbyATM() END ");
+        return atmreloads;
+        
     }
 
 }

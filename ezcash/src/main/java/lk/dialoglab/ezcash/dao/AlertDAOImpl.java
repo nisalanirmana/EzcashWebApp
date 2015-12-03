@@ -5,6 +5,7 @@ import java.util.List;
 
 import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.domain.Atm;
+import lk.dialoglab.ezcash.domain.CashOut;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.util.HibernateUtil;
 
@@ -34,6 +35,19 @@ public class AlertDAOImpl extends GenericDAOImpl<Alerts, Integer> implements Ale
 
         return alerts ;
 
+    }
+    
+    public List<Alerts> getAlertsbyAtm(String atmname){
+        System.out.println(" getCashOutsbyATM()Start ");
+        
+        String hql = "from Alerts a where a.atm.atmName = :d1 order by a.alertId desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", atmname);
+        System.out.println(" getTransactionbyReloadid() Start ");
+        List<Alerts> alerts = findMany(query);
+        
+        System.out.println(" getCashOutsbyATM() END ");
+        return alerts;
+        
     }
 
 }

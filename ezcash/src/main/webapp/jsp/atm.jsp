@@ -146,7 +146,7 @@
 	<table class="tablesorter">
 
 		<thead>
-			<tr>
+			<tr><th></th>
 				<th>Alert Id</th>
 				<th>Alert Type</th>
 				<th>Triggerd Time</th>
@@ -154,12 +154,13 @@
 			</tr>
 		<thead>
 		<tbody>
-			<c:forEach var="atm" items="${atmalerts}">
-				<tr>
-					<td>${atm.alertId}</td>
-					<td>${atm.alertType.alertName}</td>
-					<td>${atm.triggeredTime}</td>
-					<td>${atm.solvedTime}</td>
+			<c:forEach var="alerts" items="${atmalerts}">
+				<tr><td><a href="<c:url value='/removeAlert/${alerts.alertId}' />"><img
+							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
+					<td>${alerts.alertId}</td>
+					<td>${alerts.alertType.alertName}</td>
+					<td>${alerts.triggeredTime}</td>
+					<td>${alerts.solvedTime}</td>
 				</tr>
 			</c:forEach>
 		<tbody>
@@ -171,7 +172,7 @@
 	<table class="tablesorter">
 
 		<thead>
-			<tr>
+			<tr><th></th>
 				<th>Cash Out Id</th>
 				<th>Date</th>
 				<th>Amount</th>
@@ -180,7 +181,8 @@
 		<thead>
 		<tbody>
 			<c:forEach var="cashout" items="${atmcashouts}">
-				<tr>
+				<tr><td><a href="<c:url value='/removeTransaction/${cashout.cashOutId}' />"><img
+							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
 					<td>${cashout.cashOutId}</td>
 					<td>${cashout.cashOutDate}</td>
 					<td>${cashout.amount}</td>
@@ -190,6 +192,31 @@
 		<tbody>
 	</table>
 
+<h3
+		style="margin-left: 2px; font-family: Palatino Linotype; text-align: left;">Reloads</h3>
+
+	<table class="tablesorter">
+
+		<thead>
+			<tr><th></th>
+				<th>Cash Out Id</th>
+				<th>Date</th>
+				<th>Amount</th>
+				<th>Status</th>
+			</tr>
+		<thead>
+		<tbody>
+			<c:forEach var="reload" items="${atmreloads}">
+				<tr><td><a href="<c:url value='/removeReloadTask/${reload.reloadId}' />"><img
+							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
+					<td>${reload.reloadId}</td>
+					<td>${reload.reloadStartTime}</td>
+					<td>${reload.reloadEndTime}</td>
+					<td>${reload.status}</td>
+				</tr>
+			</c:forEach>
+		<tbody>
+	</table>
 
 
 	<script>

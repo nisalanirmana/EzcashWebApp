@@ -40,6 +40,24 @@ public class AlertServiceImpl implements AlertService {
     }
     
     @Override
+    public List<Alerts> getAlertsbyAtm(String atmname){
+        List<Alerts> alert = null;
+        try {
+            HibernateUtil.beginTransaction();
+            alert = alertDao.getAlertsbyAtm(atmname);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return alert;
+
+    }
+    
+    @Override
     public Alerts findalertbyid(int id) {
         Alerts alertsfind = new Alerts();
         try {

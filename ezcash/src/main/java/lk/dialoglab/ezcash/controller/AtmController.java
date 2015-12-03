@@ -27,11 +27,17 @@ import lk.dialoglab.ezcash.dto.AtmDto;
 import lk.dialoglab.ezcash.dto.AtmEditList;
 import lk.dialoglab.ezcash.dto.AtmLocationDto;
 import lk.dialoglab.ezcash.dto.ReloadDto;
+import lk.dialoglab.ezcash.service.AlertService;
 import lk.dialoglab.ezcash.service.AtmService;
 
 
 
 
+
+import lk.dialoglab.ezcash.service.ReloadService;
+import lk.dialoglab.ezcash.service.TransactionService;
+
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +65,12 @@ public class AtmController {
 
     @Autowired
     private AtmService atmService;
+    @Autowired
+    private TransactionService transactionService;
+    @Autowired
+    private ReloadService atmreloadService;
+    @Autowired
+    private AlertService alertService;
 
     private static final Logger logger = LoggerFactory.getLogger(AtmController.class);
 
@@ -70,7 +82,8 @@ public class AtmController {
         List<Atm> atmdetails = getAtmDetails(argument);
         Set<AssignedAtm> assignatmlist=atmdetails.get(0).getAssignedAtms();
         List<Alerts> topatmalertlist = getTopAtmAlerts(argument);
-        //List<CashOut> topatmcashoutlist = getTopAtmCashOuts(argument);
+        List<CashOut> topatmcashoutlist = getTopAtmCashOuts(argument);
+        List<AtmReload> topatmreloadlist = getTopAtmReloads(argument);
 
         /*
          * for (Alerts a:atmalerts)
@@ -90,6 +103,7 @@ public class AtmController {
         // model.put("atmlist1", atmlist);
         HttpSession session = request.getSession();
         session.setAttribute("AtmTab", argument);
+     
         
         String disblebtntype=AtmEditList.getDisablebtntype();
         session.setAttribute("Disablebtntype",disblebtntype);
@@ -110,7 +124,8 @@ public class AtmController {
         model.put("atm", atmdetails);
         model.put("atmoperators", assignatmlist);
         model.put("atmalerts", topatmalertlist);
-      // model.put("atmcashouts", topatmcashoutlist);
+       model.put("atmcashouts", topatmcashoutlist);
+        model.put("atmreloads", topatmreloadlist);
 
         // model.put("userdetails", userdetails);
         // and so on
@@ -139,9 +154,9 @@ public class AtmController {
     }
     
     private List<Alerts> getTopAtmAlerts(String atmname){
-        List<Atm> atmdetails = getAtmDetails(atmname);
-        Set<Alerts> atmalerts=atmdetails.get(0).getAlertses();
-        List<Alerts> atmalertslist = new ArrayList<Alerts>(atmalerts);
+        //List<Atm> atmdetails = getAtmDetails(atmname);
+        //Set<Alerts> atmalerts=atmdetails.get(0).getAlertses();
+        List<Alerts> atmalertslist = alertService.getAlertsbyAtm(atmname);
         Collections.sort(atmalertslist,new Comparator<Alerts>(){ public int compare(Alerts lhs, Alerts rhs){return(rhs.getAlertId().compareTo(lhs.getAlertId()));}});
         if(atmalertslist.size()>11){
         atmalertslist.subList(10,atmalertslist.size()).clear();
@@ -150,14 +165,28 @@ public class AtmController {
     }
     
     private List<CashOut> getTopAtmCashOuts(String atmname){
-        List<Atm> atmdetails = getAtmDetails(atmname);
-        Set<CashOut> atmcashouts=atmdetails.get(0).getCashOuts();
-        List<CashOut> atmcashoutslist = new ArrayList<CashOut>(atmcashouts);
+     //   List<Atm> atmdetails = getAtmDetails(atmname);
+      //  Set<CashOut> atmcashouts=atmdetails.get(0).getCashOuts();
+       // List<CashOut> atmcashoutslist = new ArrayList<CashOut>(atmcashouts);
+        logger.info("List<CashOut> atmcashoutslist = transactionService.getCashOutbyAtm(atmname);");
+        System.out.println("Atm Name: "+atmname);
+        List<CashOut> atmcashoutslist = transactionService.getCashOutbyAtm(atmname);
         Collections.sort( atmcashoutslist,new Comparator<CashOut>(){ public int compare(CashOut lhs, CashOut rhs){return(rhs.getCashOutId().compareTo(lhs.getCashOutId()));}});
         if(atmcashoutslist.size()>11){
             atmcashoutslist.subList(10,atmcashoutslist.size()).clear();
         }
         return atmcashoutslist;
+    }
+    
+    private List<AtmReload> getTopAtmReloads(String atmname){
+        //List<Atm> atmdetails = getAtmDetails(atmname);
+       // Set<AtmReload> atmreloads=atmdetails.get(0).getAtmReloads();
+        List<AtmReload> atmreloadslist = atmreloadService.getReloadsbyAtm(atmname);
+        Collections.sort( atmreloadslist,new Comparator<AtmReload>(){ public int compare(AtmReload lhs, AtmReload rhs){return(rhs.getReloadId().compareTo(lhs.getReloadId()));}});
+        if(atmreloadslist.size()>11){
+            atmreloadslist.subList(10,atmreloadslist.size()).clear();
+        }
+        return atmreloadslist;
     }
 
     @RequestMapping(value = "/disableatm/{atmName}", method = RequestMethod.GET)

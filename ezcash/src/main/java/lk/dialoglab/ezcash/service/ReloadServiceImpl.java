@@ -45,6 +45,24 @@ public class ReloadServiceImpl implements ReloadService {
         return reload;
 
     }
+    
+    @Override
+    public List<AtmReload> getReloadsbyAtm(String atmname){
+        List<AtmReload> reload = null;
+        try {
+            HibernateUtil.beginTransaction();
+            reload = reloadDao.getReloadsbyAtm(atmname);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return reload;
+
+    }
 
     @Override
     public AtmReload findreloadbyid(int id) {

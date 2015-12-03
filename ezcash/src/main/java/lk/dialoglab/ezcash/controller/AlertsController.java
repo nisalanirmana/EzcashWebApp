@@ -55,17 +55,25 @@ public class AlertsController {
         model.addObject("alerts", alerts);
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "alerts");
+      // System.out.println("Session ID Alerts "+session.getAttribute("MenuTab"));
         logger.info("returning the model");
         return model;
 
     }
     
     @RequestMapping("/removeAlert/{alertId}")
-    public String removeAlert(@PathVariable("alertId") int id) {
+    public String removeAlert(@PathVariable("alertId") int id,HttpServletRequest request) {
         Alerts alert =new Alerts();
         alert = alertService.findalertbyid(id);
         alertService.deletealertbyid(alert);
-        return "redirect:/alerts";
+        HttpSession session = request.getSession();
+        String menuSessionAttrib=session.getAttribute("MenuTab").toString();
+        String submenuSessionAttrib=session.getAttribute("AtmTab").toString();
+        if(menuSessionAttrib.equals("alerts")){
+            return "redirect:/alerts";
+        }
+        else
+        return "redirect:/"+submenuSessionAttrib;
     }
     
     @RequestMapping(value = "/getdatesalerts", method = RequestMethod.POST)

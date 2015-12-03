@@ -262,7 +262,7 @@ public class Atm implements java.io.Serializable {
         this.alertses = alertses;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "atm")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "atm")
     public Set<AtmReload> getAtmReloads() {
         return this.atmReloads;
     }

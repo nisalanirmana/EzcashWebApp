@@ -72,20 +72,20 @@ $(function() {
 					<th>ATM Name</th>
 					<th>Transaction Time</th>
 					<th>Transaction Amount</th>
-					<th>Type</th>
+					<th>Status</th>
 
 
 				</tr>
 			<thead>
 			<tbody>
-				<c:forEach var="transactions" items="${transactions}">
+				<c:forEach var="cashouts" items="${cashouts}">
 					<tr>
-					<td><a href="<c:url value='/removeTransaction/${transactions.transactionId}' />"><img
+					<td><a href="<c:url value='/removeTransaction/${cashouts.cashOutId}' />"><img
 							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
-						<td>${transactions.cashOut.atm.atmName}</td>
-						<td>${transactions.cashOut.cashOutDate}</td>
-						<td>${transactions.amount}</td>
-						<td>${transactions.cashOut.status}</td>
+						<td>${cashouts.atm.atmName}</td>
+						<td>${cashouts.cashOutDate}</td>
+						<td>${cashouts.amount}</td>
+						<td>${cashouts.status}</td>
 					</tr>
 				</c:forEach>
 			<tbody>

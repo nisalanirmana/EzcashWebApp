@@ -8,8 +8,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lk.dialoglab.ezcash.dao.CashOutDAO;
 import lk.dialoglab.ezcash.dao.TransactionDAO;
 import lk.dialoglab.ezcash.domain.AtmReload;
+import lk.dialoglab.ezcash.domain.CashOut;
 import lk.dialoglab.ezcash.domain.Operator;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.util.HibernateUtil;
@@ -19,13 +21,15 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionDAO transactionDao;
+    @Autowired
+    private CashOutDAO cashoutDao;
 
-    public List<Transactions> getTransactions() {
-        List<Transactions> transactions = null;
+    public List<CashOut> getCashOuts() {
+        List<CashOut> cashouts = null;
         try {
             HibernateUtil.beginTransaction();
            
-            transactions = transactionDao.getTransactions();
+            cashouts = cashoutDao.getCashOuts();
 
 
             HibernateUtil.commitTransaction();
@@ -35,8 +39,27 @@ public class TransactionServiceImpl implements TransactionService {
 
         }
 
-        return transactions;
+        return cashouts;
 
+    }
+    
+    public List<CashOut> getCashOutbyAtm(String atmname){
+        System.out.println("getCashOutbyAtm(String atmname)");
+        List<CashOut> cashoutsatm = null;
+        try {
+            HibernateUtil.beginTransaction();
+           
+            cashoutsatm = cashoutDao.getCashOutbyAtm(atmname);
+
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return cashoutsatm;
     }
 
     public List<Transactions> getReloads() {
@@ -84,13 +107,13 @@ public class TransactionServiceImpl implements TransactionService {
      * }
      */
 
-    public List<Transactions> getFilteredTrans(Date fromDate, Date toDate) {
-        List<Transactions> transactions = null;
+    public List<CashOut> getFilteredCashOuts(Date fromDate, Date toDate) {
+        List<CashOut> cashouts = null;
 
         try {
             HibernateUtil.beginTransaction();
 
-            transactions = transactionDao.getFilteredTrans(fromDate, toDate);
+            cashouts = cashoutDao.getFilteredCashOuts(fromDate, toDate);
 
             HibernateUtil.commitTransaction();
         } catch (Exception e) {
@@ -99,7 +122,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         }
 
-        return transactions;
+        return cashouts;
 
     }
     
@@ -144,6 +167,36 @@ public class TransactionServiceImpl implements TransactionService {
         try {
             HibernateUtil.beginTransaction();
             transactionDao.delete(transaction);
+            System.out.println("Deleted");
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+        }
+    }
+    
+    @Override
+    public CashOut findCashOutbyid(int id) {
+        CashOut cashoutfind = null;
+        try {
+            HibernateUtil.beginTransaction();
+            System.out.println("found" + id);
+            cashoutfind = cashoutDao.findByID(CashOut.class, id);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+        }
+        System.out.println("return" + id);
+        return cashoutfind;
+    }
+
+    @Override
+    public void deleteCashOutbyid(CashOut cashout) {
+        try {
+            HibernateUtil.beginTransaction();
+            cashoutDao.delete(cashout);
             System.out.println("Deleted");
             HibernateUtil.commitTransaction();
         } catch (Exception e) {

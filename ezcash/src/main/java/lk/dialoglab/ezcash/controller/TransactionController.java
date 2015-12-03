@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.domain.Atm;
+import lk.dialoglab.ezcash.domain.CashOut;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.dto.Login;
 import lk.dialoglab.ezcash.dto.Period;
@@ -44,16 +45,17 @@ public class TransactionController {
     public ModelMap showSystemForm(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "transaction");
+        System.out.println("Session ID Transaction "+session.getId());
         logger.info("transaction page !");
 
-        List<Transactions> transaction = getTransactions();
+        List<CashOut> cashouts = getCashOuts();
         List<Transactions> reload = getReloads();
         ModelMap model = new ModelMap();
 
         // ModelAndView model = new ModelAndView("transaction");
         // model.addObject("transactions",transactions);
         // model.addObject("transactions", reloads);
-        model.put("transactions", transaction);
+        model.put("cashouts", cashouts);
         model.put("reloads", reload);
         // model.a("transactions", transactions);
         // model.addAttribute("two", 2);
@@ -69,10 +71,10 @@ public class TransactionController {
 
         logger.info("Get Dates");
 
-        List<Transactions> transactions = getFilteredTrans(period.getFromDate(), period.getToDate());
+        List<CashOut> cashouts = getFilteredCashOuts(period.getFromDate(), period.getToDate());
         List<Transactions> reloads = getFilteredReloads(period.getFromDate(), period.getToDate());
         ModelAndView model = new ModelAndView("transaction");
-        model.addObject("transactions", transactions);
+        model.addObject("cashouts", cashouts);
         model.addObject("reloads", reloads);
         //model.addObject("reloads", transactions);
 
@@ -80,13 +82,13 @@ public class TransactionController {
 
     }
 
-    private List<Transactions> getFilteredTrans(String fromDate, String toDate) throws ParseException {
+    private List<CashOut> getFilteredCashOuts(String fromDate, String toDate) throws ParseException {
 
         DateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
 
         Date date1 = formatter.parse(fromDate);
         Date date2 = formatter.parse(toDate);
-        List<Transactions> transactions = transactionService.getFilteredTrans(date1, date2);
+        List<CashOut> cashouts = transactionService.getFilteredCashOuts(date1, date2);
         /*
         logger.info("****************************************************************888");
         for (Transactions t : transactions) {
@@ -96,7 +98,7 @@ public class TransactionController {
 
         }
         */
-        return transactions;
+        return cashouts;
 
     }
     
@@ -118,8 +120,8 @@ public class TransactionController {
 
     }
 
-    private List<Transactions> getTransactions() {
-        List<Transactions> transactions = transactionService.getTransactions();
+    private List<CashOut> getCashOuts() {
+        List<CashOut> cashouts = transactionService.getCashOuts();
         /*
          * logger.info("****************************************************************888");
          * for (Transactions t:transactions)
@@ -131,7 +133,7 @@ public class TransactionController {
          * 
          * }
          */
-        return transactions;
+        return cashouts;
 
     }
 
@@ -152,12 +154,20 @@ public class TransactionController {
 
     }
     
-    @RequestMapping("/removeTransaction/{transactionId}")
-    public String removeTransactions(@PathVariable("transactionId") int id) {
-        Transactions transaction =new Transactions();
-        transaction = transactionService.findtransactionbyid(id);
-        transactionService.deletetransactionbyid(transaction);
-        return "redirect:/transaction";
+    @RequestMapping("/removeTransaction/{cashOutId}")
+    public String removeTransactions(@PathVariable("cashOutId") int id,HttpServletRequest request) {
+        CashOut cashout =new CashOut();
+        cashout = transactionService.findCashOutbyid(id);
+        transactionService.deleteCashOutbyid(cashout);
+        HttpSession session = request.getSession();
+        String menuSessionAttrib=session.getAttribute("MenuTab").toString();
+        String submenuSessionAttrib=session.getAttribute("AtmTab").toString();
+        if(menuSessionAttrib.equals("transaction")){
+            return "redirect:/transaction";
+        }
+        else
+        return "redirect:/"+submenuSessionAttrib;
+       
     }
 
 

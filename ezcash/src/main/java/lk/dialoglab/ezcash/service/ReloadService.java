@@ -21,5 +21,6 @@ public interface ReloadService {
 
     public List<Operator> getOperatorDropDownList();
     
+    public List<AtmReload> getReloadsbyAtm(String atmname);
     
 }

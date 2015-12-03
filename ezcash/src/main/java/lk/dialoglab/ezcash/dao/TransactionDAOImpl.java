@@ -5,6 +5,7 @@ import java.util.List;
 
 import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.domain.Atm;
+import lk.dialoglab.ezcash.domain.CashOut;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.util.HibernateUtil;
 
@@ -64,6 +65,7 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         return transactions;
 
     }
+    
 
     // reload
 

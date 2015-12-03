@@ -5,6 +5,7 @@ import java.util.List;
 
 import lk.dialoglab.ezcash.domain.Alerts;
 import lk.dialoglab.ezcash.domain.Atm;
+import lk.dialoglab.ezcash.domain.CashOut;
 import lk.dialoglab.ezcash.domain.Transactions;
 
 /**
@@ -19,5 +20,6 @@ public interface AlertDAO extends GenericDAO<Alerts, Integer> {
 
     public List<Alerts> getAlerts();
     public List<Alerts> getFilteredAlerts(Date fromDate, Date toDate);
+    public List<Alerts> getAlertsbyAtm(String atmname);
 
 }
