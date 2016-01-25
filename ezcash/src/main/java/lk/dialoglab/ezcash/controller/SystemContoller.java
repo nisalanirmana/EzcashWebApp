@@ -28,6 +28,7 @@ public class SystemContoller {
         model.addObject("atmlist", atmlist);
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "system");
+        session.setAttribute("AtmTab", "");
         return model;
 
     }

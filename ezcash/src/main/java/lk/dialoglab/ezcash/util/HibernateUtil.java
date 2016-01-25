@@ -14,10 +14,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -26,17 +29,31 @@ import org.w3c.dom.Element;
 @Component
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory;
-
-    static {
+    private static  SessionFactory sessionFactory;
+    private static  ServiceRegistry serviceRegistry;
+    
+    
+    @Autowired
+    public HibernateUtil(DBInfo dbInfo) {
+    
+        System.out.println("++++++++++++++++Set session Factory+++++++++++++++++++++++++");
+        setSessionFactory(dbInfo);
+    }
+    
+    
+    
+    private static  void setSessionFactory(DBInfo dbInfo) {
         try {
 
-            Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-
-            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration
-                    .getProperties());
-
-            sessionFactory = configuration.buildSessionFactory(builder.build());
+            Configuration conf = new Configuration().configure();
+            String url = "jdbc:mysql://" + dbInfo.getServer() + ":" + dbInfo.getPort() + "/" + dbInfo.getDbName();
+            //System.out.println("dbInfo: " + dbInfo);
+            System.out.println("url to open++++++++++++++++: " + url + " dbInfo:" + dbInfo.getUsername() + " dbInfo: " + dbInfo.getPassword());
+            conf.setProperty("hibernate.connection.url", url);
+            conf.setProperty("hibernate.connection.username", dbInfo.getUsername());
+            conf.setProperty("hibernate.connection.password", dbInfo.getPassword());
+            serviceRegistry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
+            sessionFactory = conf.buildSessionFactory(serviceRegistry);
 
         }
 

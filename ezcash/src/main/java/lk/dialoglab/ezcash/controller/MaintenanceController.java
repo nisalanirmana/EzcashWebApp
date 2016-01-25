@@ -110,7 +110,11 @@ public class MaintenanceController {
         // Navigation Menu css Change---------------
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "maintenance");
+       
         System.out.println("Session ID Transaction "+session.getId());
+        System.out.println("Session ID ATMTAB "+session.getAttribute("AtmTab").toString());
+        System.out.println("Session ID MenuTab"+session.getAttribute("MenuTab").toString());
+        
         // -----------------------------------------
         logger.info("maintenance page !");
         return model;
@@ -225,9 +229,11 @@ public class MaintenanceController {
         switch (atmreload.getStatus()) {
         case "4":
             transactionslist = transactionService.getTransactionbyReloadid(id);
+            if(!transactionslist.isEmpty()){
             Transactionid = transactionslist.get(0).getTransactionId();
             transactions = transactionService.findtransactionbyid(Transactionid);
             transactionService.deletetransactionbyid(transactions);
+            }
             reloadService.deletereloadbyid(atmreload);
             System.out.println("Transaction");
             break;

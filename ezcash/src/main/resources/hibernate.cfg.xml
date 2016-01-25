@@ -4,24 +4,35 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-<!--
-    <property name="hibernate.connection.url">jdbc:mysql://203.189.68.250:3306/cashatm</property>
-    <property name="hibernate.connection.username">hasala</property>
-    <property name="hibernate.connection.password">hasala123</property>
-     -->  
-    <!-- 
+<!-- 
+    <property name="hibernate.connection.url"></property>
+    <property name="hibernate.connection.username"></property>
+    <property name="hibernate.connection.password"></property>
+  --> 
+    <property name="hibernate.connection.url"></property>
+    <property name="hibernate.connection.username"></property>
+    <property name="hibernate.connection.password"></property>
+   
+    <!--
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/cashatm</property>
     <property name="hibernate.connection.username">ezatm</property>
     <property name="hibernate.connection.password">ezatm</property>
-    
-     -->
-        
+      -->  
+     
+     <!--   
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/cashatm</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
- 
+  -->
     <property name="hibernate.current_session_context_class">thread</property>
-    <property name="hibernate.jdbc.batch_size">20</property>
+    <!-- configuration pool via c3p0 -->
+    <property name= "hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>      
+    <property name="hibernate.c3p0.acquire_increment">5</property>
+    <property name="hibernate.c3p0.idle_test_period">1800</property>
+    <property name="hibernate.c3p0.max_size">600</property>
+    <property name="hibernate.c3p0.max_statements">50</property>
+    <property name="hibernate.c3p0.min_size">5</property>
+    <property name="hibernate.c3p0.timeout">1800</property> 
     
     
     
