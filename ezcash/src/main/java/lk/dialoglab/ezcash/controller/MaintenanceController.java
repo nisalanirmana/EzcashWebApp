@@ -226,8 +226,8 @@ public class MaintenanceController {
         List<Transactions> transactionslist = null;
         atmreload = reloadService.findreloadbyid(id);
         int Transactionid = 0;
-        switch (atmreload.getStatus()) {
-        case "4":
+        switch (atmreload.getTransactionStatus().getStatusId()) {
+        case '4':
             transactionslist = transactionService.getTransactionbyReloadid(id);
             if(!transactionslist.isEmpty()){
             Transactionid = transactionslist.get(0).getTransactionId();

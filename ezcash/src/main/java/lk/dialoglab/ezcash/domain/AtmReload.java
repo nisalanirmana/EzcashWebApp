@@ -27,13 +27,13 @@ public class AtmReload implements java.io.Serializable {
 
     private Integer reloadId;
     private Atm atm;
+    private TransactionStatus transactionStatus;
     private Operator operator;
     private Date taskCreatedTime;
     private Date taskExpiryTime;
     private Date reloadStartTime;
     private Date reloadEndTime;
     // private double amount;
-    private String status;
     private int tray1;
     private int tray2;
     private int otk;
@@ -44,17 +44,17 @@ public class AtmReload implements java.io.Serializable {
     public AtmReload() {
     }
 
-    public AtmReload(Atm atm, Operator operator, Date taskCreatedTime, Date taskExpiryTime, Date reloadStartTime,
+    public AtmReload(Atm atm,TransactionStatus transactionStatus, Operator operator, Date taskCreatedTime, Date taskExpiryTime, Date reloadStartTime,
             Date reloadEndTime, double amount, String status, int tray1, int tray2, int tray1Rejects, int tray2Rejects,
             int otk) {
         this.atm = atm;
+        this.transactionStatus = transactionStatus;
         this.operator = operator;
         this.taskCreatedTime = taskCreatedTime;
         this.taskExpiryTime = taskExpiryTime;
         this.reloadStartTime = reloadStartTime;
         this.reloadEndTime = reloadEndTime;
         // this.amount = amount;
-        this.status = status;
         this.tray1 = tray1;
         this.tray2 = tray2;
         this.otk = otk;
@@ -72,7 +72,6 @@ public class AtmReload implements java.io.Serializable {
         this.reloadStartTime = reloadStartTime;
         this.reloadEndTime = reloadEndTime;
         // this.amount = amount;
-        this.status = status;
         this.tray1 = tray1;
         this.tray2 = tray2;
         this.otk = otk;
@@ -100,6 +99,16 @@ public class AtmReload implements java.io.Serializable {
 
     public void setAtm(Atm atm) {
         this.atm = atm;
+    }
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="status")
+    public TransactionStatus getTransactionStatus() {
+        return this.transactionStatus;
+    }
+    
+    public void setTransactionStatus(TransactionStatus transactionStatus) {
+        this.transactionStatus = transactionStatus;
     }
 
     @ManyToOne
@@ -163,14 +172,7 @@ public class AtmReload implements java.io.Serializable {
      * }
      */
 
-    @Column(name = "status", nullable = true, length = 45)
-    public String getStatus() {
-        return this.status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     @Column(name = "tray1_task", nullable = true)
     public int getTray1() {

@@ -49,5 +49,6 @@
     <mapping class="lk.dialoglab.ezcash.domain.AtmLocation"/>
     <mapping class="lk.dialoglab.ezcash.domain.AssignedAtm"/>
     <mapping class="lk.dialoglab.ezcash.domain.Operator"/>
+    <mapping class="lk.dialoglab.ezcash.domain.TransactionStatus"/>
   </session-factory>
 </hibernate-configuration>

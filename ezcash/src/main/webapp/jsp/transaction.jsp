@@ -85,7 +85,7 @@ $(function() {
 						<td>${cashouts.atm.atmName}</td>
 						<td>${cashouts.cashOutDate}</td>
 						<td>${cashouts.amount}</td>
-						<td>${cashouts.status}</td>
+						<td>${cashouts.transactionStatus.statusName}</td>
 					</tr>
 				</c:forEach>
 			<tbody>
@@ -115,7 +115,7 @@ $(function() {
 						<td>${reloads.atmReload.reloadEndTime}</td>
 						<td>${reloads.tray1}</td>
 						<td>${reloads.tray2}</td>
-						<td>${reloads.atmReload.status}</td>
+						<td>${reloads.atmReload.transactionStatus.statusName}</td>
 					</tr>
 				</c:forEach>
 			<tbody>

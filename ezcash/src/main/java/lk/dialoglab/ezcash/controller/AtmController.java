@@ -36,6 +36,7 @@ import lk.dialoglab.ezcash.service.AtmService;
 
 import lk.dialoglab.ezcash.service.ReloadService;
 import lk.dialoglab.ezcash.service.TransactionService;
+import lk.dialoglab.ezcash.util.DBInfo;
 
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -198,9 +199,9 @@ public class AtmController {
         
         String sendingString = "##CMD,DISABLE," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        sendmsg(sendingString, "localhost:8080/ezcashATMserver/webMsg/");
         String postData = sendingString;
-        URL url = new URL("http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        URL url = new URL("localhost:8080/ezcashATMserver/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
@@ -224,9 +225,9 @@ public class AtmController {
         setEnableBtnStatus(atmdetails);
         String sendingString = "##CMD,ENABLE," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        sendmsg(sendingString, "localhost:8080/ezcashATMserver/webMsg/");
         String postData = sendingString;
-        URL url = new URL("http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        URL url = new URL("localhost:8080/ezcashATMserver/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
@@ -248,9 +249,9 @@ public class AtmController {
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
         String sendingString = "##CMD,UNLOCK," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        sendmsg(sendingString, "localhost:8080/ezcashATMserver/webMsg/");
         String postData = sendingString;
-        URL url = new URL("http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        URL url = new URL("localhost:8080/ezcashATMserver/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
@@ -272,9 +273,9 @@ public class AtmController {
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
         String sendingString = "##CMD,REBOOT," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        sendmsg(sendingString, "localhost:8080/ezcashATMserver/webMsg/");
         String postData = sendingString;
-        URL url = new URL("http://203.189.68.250:80/ezcashATMserver/webMsg/");
+        URL url = new URL("localhost:8080/ezcashATMserver/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");

@@ -12,6 +12,7 @@ import lk.dialoglab.ezcash.dao.TransactionDAO;
 import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.AtmReload;
 import lk.dialoglab.ezcash.domain.Operator;
+import lk.dialoglab.ezcash.domain.TransactionStatus;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.dto.ReloadDto;
 import lk.dialoglab.ezcash.util.HibernateUtil;
@@ -125,6 +126,7 @@ public class ReloadServiceImpl implements ReloadService {
 
             // Atm
             Atm atmObject = new Atm();// create a new ATM object
+            TransactionStatus transactionstatus = new TransactionStatus();
             String str1Id = reloaddto.getAtm(); // we receive id as a string
             // Integer atmId = Integer.parseInt(str1Id); // need to convert string to Integer
             // System.out.println("Atm name1 "+str1Id);
@@ -174,7 +176,8 @@ public class ReloadServiceImpl implements ReloadService {
             reload.setTray1(reloaddto.getTray1());
             reload.setTray2(reloaddto.getTray2());
             // status
-            reload.setStatus("1");
+            transactionstatus.setStatusId(1);
+            reload.setTransactionStatus(transactionstatus);
             // otk
             reload.setotk(1);
             reloadDao.save(reload);

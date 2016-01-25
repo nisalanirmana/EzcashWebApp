@@ -76,7 +76,7 @@ $(function() {
 					<td>${d.taskExpiryTime}</td>
 					<td>${d.tray1}</td>
 					<td>${d.tray2}</td>
-					<td><div class="text_div">${d.status}</div></td>
+					<td><div class="text_div">${d.transactionStatus.statusName}</div></td>
 
 
 

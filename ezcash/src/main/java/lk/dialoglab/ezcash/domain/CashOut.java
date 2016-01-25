@@ -33,23 +33,23 @@ public class CashOut implements java.io.Serializable {
 
     private Integer cashOutId;
     private Atm atm;
+    private TransactionStatus transactionStatus;
     private Date cashOutDate;
     private String phoneNumber;
     private Double amount;
-    private Integer status;
     private String responseId;
     private Set<Transactions> transactionses = new HashSet<Transactions>(0);
 
     public CashOut() {
     }
 
-    public CashOut(Atm atm, Date cashOutDate, String phoneNumber, Double amount, Integer status, String responseId,
+    public CashOut(Atm atm,TransactionStatus transactionStatus, Date cashOutDate, String phoneNumber, Double amount, Integer status, String responseId,
             Set<Transactions> transactionses) {
         this.atm = atm;
         this.cashOutDate = cashOutDate;
         this.phoneNumber = phoneNumber;
         this.amount = amount;
-        this.status = status;
+        this.transactionStatus = transactionStatus;
         this.responseId = responseId;
         this.transactionses = transactionses;
        
@@ -80,6 +80,15 @@ public class CashOut implements java.io.Serializable {
         System.out.println("3 "+System.currentTimeMillis());
         this.atm = atm;
     }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="status")
+    public TransactionStatus getTransactionStatus() {
+        return this.transactionStatus;
+    }
+    
+    public void setTransactionStatus(TransactionStatus transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    } 
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "cash_out_date", length = 19)
@@ -115,16 +124,6 @@ public class CashOut implements java.io.Serializable {
         this.amount = amount;
     }
 
-    @Column(name = "status")
-    public Integer getStatus() {
-        System.out.println("10 "+System.currentTimeMillis());
-        return this.status;
-    }
-
-    public void setStatus(Integer status) {
-        System.out.println("11 "+System.currentTimeMillis());
-        this.status = status;
-    }
 
     @Column(name = "response_id", length = 45)
     public String getResponseId() {

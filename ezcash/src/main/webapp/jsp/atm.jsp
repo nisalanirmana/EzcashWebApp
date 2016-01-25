@@ -57,6 +57,10 @@
 				<td>${atm.serialNo}</td>
 			</tr>
 			<tr>
+				<th>Atm Code</th>
+				<td>${atm.atmCode}</td>
+			</tr>
+			<tr>
 				<th>Alert</th>
 				<td>${atm.alert}</td>
 			</tr>
@@ -186,7 +190,7 @@
 					<td>${cashout.cashOutId}</td>
 					<td>${cashout.cashOutDate}</td>
 					<td>${cashout.amount}</td>
-					<td>${cashout.status}</td>
+					<td>${cashout.transactionStatus.statusName}</td>
 				</tr>
 			</c:forEach>
 		<tbody>
@@ -212,7 +216,7 @@
 					<td>${reload.reloadId}</td>
 					<td>${reload.reloadStartTime}</td>
 					<td>${reload.reloadEndTime}</td>
-					<td>${reload.status}</td>
+					<td>${reload.transactionStatus.statusName}</td>
 				</tr>
 			</c:forEach>
 		<tbody>
