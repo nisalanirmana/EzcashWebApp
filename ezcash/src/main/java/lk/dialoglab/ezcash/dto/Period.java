@@ -6,7 +6,6 @@ public class Period {
 
     private String toDate;
     private String fromDate;
-
     private String atmName;
 
     public String getAtmName() {

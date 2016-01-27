@@ -111,9 +111,9 @@ public class MaintenanceController {
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "maintenance");
        
-        System.out.println("Session ID Transaction "+session.getId());
-        System.out.println("Session ID ATMTAB "+session.getAttribute("AtmTab").toString());
-        System.out.println("Session ID MenuTab"+session.getAttribute("MenuTab").toString());
+        //System.out.println("Session ID Transaction "+session.getId());
+        //System.out.println("Session ID ATMTAB "+session.getAttribute("AtmTab").toString());
+        //System.out.println("Session ID MenuTab"+session.getAttribute("MenuTab").toString());
         
         // -----------------------------------------
         logger.info("maintenance page !");

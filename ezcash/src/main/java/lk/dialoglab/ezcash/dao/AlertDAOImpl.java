@@ -37,6 +37,18 @@ public class AlertDAOImpl extends GenericDAOImpl<Alerts, Integer> implements Ale
 
     }
     
+    public List<Alerts> getFilteredAlertsbyAtm(Date fromDate, Date toDate,String atmName) {
+        String hql = "from Alerts t where t.triggeredTime>:d1 and t.triggeredTime<:d2 and t.atm.atmName=:d3 order by t.triggeredTime desc";
+        // String hql =
+        // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate).setParameter("d2", toDate).setParameter("d3", atmName);
+
+        List<Alerts> alerts = findMany(query);
+
+        return alerts ;
+
+    }
+    
     public List<Alerts> getAlertsbyAtm(String atmname){
         System.out.println(" getCashOutsbyATM()Start ");
         

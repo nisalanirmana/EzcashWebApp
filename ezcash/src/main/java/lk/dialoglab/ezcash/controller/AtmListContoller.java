@@ -108,9 +108,11 @@ public class AtmListContoller {
          */
         List<AtmLocation> atmlocationeditlist = new ArrayList<AtmLocation>();
         atmlocationeditlist = AtmLocationEditList.getAtmlocation();
+        
 
         List<Atm> atmeditlist = new ArrayList<Atm>();
         atmeditlist = AtmEditList.getAtm();
+     
         // Map<String, Object> model = new HashMap<String, Object>();
 
         Map<String, Object> model = new HashMap<String, Object>();

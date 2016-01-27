@@ -117,5 +117,24 @@ public class AlertServiceImpl implements AlertService {
         return alerts;
 
     }
+    
+    public List<Alerts> getFilteredAlertsbyAtm(Date fromDate, Date toDate,String atmName){
+        List<Alerts> alerts = null;
+
+        try {
+            HibernateUtil.beginTransaction();
+
+            alerts = alertDao.getFilteredAlertsbyAtm(fromDate, toDate, atmName);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return alerts;
+
+    }
 
 }

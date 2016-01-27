@@ -20,6 +20,7 @@ public interface AlertDAO extends GenericDAO<Alerts, Integer> {
 
     public List<Alerts> getAlerts();
     public List<Alerts> getFilteredAlerts(Date fromDate, Date toDate);
+    public List<Alerts> getFilteredAlertsbyAtm(Date fromDate, Date toDate,String atmName);
     public List<Alerts> getAlertsbyAtm(String atmname);
 
 }

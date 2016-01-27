@@ -46,14 +46,20 @@ $(function() {
 				<tr>
 
 					<td>Start Date</td>
-					<td><input type="text" class="datetime" name="fromDate"></td>
+					<td><input type="text" class="datetime" name="fromDate" required></td>
 
 					<td>End Date</td>
-					<td><input type="text" class="datetime" name="toDate"></td>
-					<!--  
-				<td>Atm Name</td>
-				<td><input type="text" class="text"  name="atmName"></td>
-			-->
+					<td><input type="text" class="datetime" name="toDate" required></td>
+					 
+				   <td>Atm Name</td>
+				  
+				  <td><select name="atmName">
+							<option value="" label="............." />
+							<c:forEach var="at" items="${atmdrpdwnlist}">
+								<option>${at}</option>
+							</c:forEach>
+					</select></td>
+		
 					<td><input type="submit" value="Filter Alerts">
 					</td>
 				</tr>

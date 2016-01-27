@@ -203,9 +203,12 @@
 
 		<thead>
 			<tr><th></th>
-				<th>Cash Out Id</th>
-				<th>Date</th>
-				<th>Amount</th>
+				<th>Reload Id</th>
+				<th>Created Time</th>
+				<th>Start Time</th>
+				<th>End Time</th>
+				<th>Tray 1 </th>
+				<th>Tray 2 </th>
 				<th>Status</th>
 			</tr>
 		<thead>
@@ -214,8 +217,11 @@
 				<tr><td><a href="<c:url value='/removeReloadTask/${reload.reloadId}' />"><img
 							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
 					<td>${reload.reloadId}</td>
+					<td>${reload.taskCreatedTime}</td>
 					<td>${reload.reloadStartTime}</td>
 					<td>${reload.reloadEndTime}</td>
+					<td>${reload.tray1}</td>
+					<td>${reload.tray2}</td>
 					<td>${reload.transactionStatus.statusName}</td>
 				</tr>
 			</c:forEach>

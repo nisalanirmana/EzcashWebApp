@@ -4,16 +4,20 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import lk.dialoglab.ezcash.domain.Alerts;
+import lk.dialoglab.ezcash.domain.Atm;
 import lk.dialoglab.ezcash.domain.AtmReload;
 import lk.dialoglab.ezcash.domain.Transactions;
 import lk.dialoglab.ezcash.dto.Period;
 import lk.dialoglab.ezcash.service.AlertService;
+import lk.dialoglab.ezcash.service.ReloadService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,12 +39,16 @@ public class AlertsController {
 
     @Autowired
     private AlertService alertService;
+    
+    @Autowired
+    private ReloadService reloadService;
 
-    @RequestMapping(value = "/alerts", method = RequestMethod.GET)
-    public ModelAndView showSystemForm(HttpServletRequest request) {
+    @RequestMapping(value = "/alerts")
+    public ModelAndView Alerts(HttpServletRequest request) {
 
         logger.info("alerts page !");
-
+        List<Atm> atmdropdownlist = reloadService.getAtmDropDownList();
+        String[] atmdrpdwn = atmdropdownlist.toArray(new String[] {});
         List<Alerts> alerts = alertService.getAlerts();
 
         for (Alerts a : alerts) {
@@ -51,13 +59,15 @@ public class AlertsController {
 
         }
 
-        ModelAndView model = new ModelAndView("alerts");
-        model.addObject("alerts", alerts);
+       // ModelAndView model = new ModelAndView("alerts");
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("alerts", alerts);
+        model.put("atmdrpdwnlist", atmdrpdwn);
         HttpSession session = request.getSession();
         session.setAttribute("MenuTab", "alerts");
       // System.out.println("Session ID Alerts "+session.getAttribute("MenuTab"));
         logger.info("returning the model");
-        return model;
+        return new ModelAndView("alerts", model);
 
     }
     
@@ -78,21 +88,44 @@ public class AlertsController {
     
     @RequestMapping(value = "/getdatesalerts", method = RequestMethod.POST)
     public ModelAndView getalertsdates(Period period, BindingResult result) throws ParseException {
-
+        List<Atm> atmdropdownlist = reloadService.getAtmDropDownList();
+        String[] atmdrpdwn = atmdropdownlist.toArray(new String[] {});
         System.out.println("-------------------------------------------------------------------------------Start Date:"
                 + period.getFromDate() + "End Date:" + period.getToDate() + period.getAtmName());
 
         logger.info("Get Dates");
-
-        List<Alerts> alerts = getFilteredAlerts(period.getFromDate(), period.getToDate());
-        ModelAndView model = new ModelAndView("alerts");
-        model.addObject("alerts", alerts);
-        //model.addObject("reloads", transactions);
-
-        return model;
-
+if(period.getAtmName().isEmpty()){
+    List<Alerts> alerts = getFilteredAlerts(period.getFromDate(), period.getToDate());
+    Map<String, Object> model = new HashMap<String, Object>();
+    model.put("alerts", alerts);
+    model.put("atmdrpdwnlist", atmdrpdwn);
+    return new ModelAndView("alerts", model);
+}else{
+        List<Alerts> alerts = getFilteredAlertsbyAtm(period.getFromDate(), period.getToDate(),period.getAtmName());
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("alerts", alerts);
+        model.put("atmdrpdwnlist", atmdrpdwn);
+        return new ModelAndView("alerts", model);
+}
     }
+    private List<Alerts> getFilteredAlertsbyAtm(String fromDate, String toDate,String atmName) throws ParseException {
 
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
+
+        Date date1 = formatter.parse(fromDate);
+        Date date2 = formatter.parse(toDate);
+        List<Alerts> alerts = alertService.getFilteredAlertsbyAtm(date1, date2,atmName);
+        logger.info("****************************************************************888");
+        for (Alerts t : alerts) {
+
+          //  logger.info("Amount" + t.getAmount());
+            // logger.info("ATM Location"+t.get);
+
+        }
+        return alerts;
+
+    } 
+    
     private List<Alerts> getFilteredAlerts(String fromDate, String toDate) throws ParseException {
 
         DateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");

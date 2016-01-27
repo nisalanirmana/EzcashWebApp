@@ -13,6 +13,7 @@ public interface AlertService {
     public Alerts findalertbyid(int id);
     public void deletealertbyid(Alerts alert);
     public List<Alerts> getFilteredAlerts(Date fromDate, Date toDate);
+    public List<Alerts> getFilteredAlertsbyAtm(Date fromDate, Date toDate,String atmName);
     public List<Alerts> getAlertsbyAtm(String atmname);
     
 }

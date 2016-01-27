@@ -22,6 +22,7 @@
 	src="<c:url value="/resources/js/jquery-ui-1.7.2.custom.min.js" />"></script>
 <!-- Time Picker -->
 <script src="<c:url value="/resources/js/timepicker.js" />"></script>
+</head>
 <body>
 
 	<h3
@@ -87,8 +88,7 @@
 					<td>Location</td>
 
 					<td><select name="atmLocation" style="width: 100%">
-							<option value="${atmAttribute[0].atmLocation.locationName}"
-								label="${atmAttribute[0].atmLocation.locationName}" />
+							<option value="${atmAttribute[0].atmLocation.locationName}" label="${atmAttribute[0].atmLocation.locationName}"/>
 							<c:forEach var="atl" items="${atmlocationdrpdwnlist}">
 								<option>${atl}</option>
 							</c:forEach>

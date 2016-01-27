@@ -37,6 +37,7 @@ import lk.dialoglab.ezcash.service.AtmService;
 import lk.dialoglab.ezcash.service.ReloadService;
 import lk.dialoglab.ezcash.service.TransactionService;
 import lk.dialoglab.ezcash.util.DBInfo;
+import lk.dialoglab.ezcash.util.ServerInfo;
 
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -191,17 +192,20 @@ public class AtmController {
     }
 
     @RequestMapping(value = "/disableatm/{atmName}", method = RequestMethod.GET)
-    public String handlePost3(@PathVariable("atmName") String argument, @RequestParam String action, Model m)
+    public String handlePost3(@PathVariable("atmName") String argument, @RequestParam String action, Model m, ServerInfo serverinfo )
             throws IOException {
+        String server = serverinfo.getServer();
+        String port = serverinfo.getPort();
+        String name = serverinfo.getName();
         List<Atm> atmdetails = getAtmDetails(argument);
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
         setDisableBtnStatus(atmdetails);
         
         String sendingString = "##CMD,DISABLE," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "localhost:8080/ezcashATMserver/webMsg/");
+        sendmsg(sendingString,"http://"+server+":"+port+"/"+name+"/webMsg/");
         String postData = sendingString;
-        URL url = new URL("localhost:8080/ezcashATMserver/webMsg/");
+        URL url = new URL("http://"+server+":"+port+"/"+name+"/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
@@ -218,16 +222,19 @@ public class AtmController {
     }
     
     @RequestMapping(value = "/enableatm/{atmName}", method = RequestMethod.GET)
-    public String handlePost4(@PathVariable("atmName") String argument, @RequestParam String action, Model m)
+    public String handlePost4(@PathVariable("atmName") String argument, @RequestParam String action, Model m, ServerInfo serverinfo )
             throws IOException {
+        String server = serverinfo.getServer();
+        String port = serverinfo.getPort();
+        String name = serverinfo.getName();
         List<Atm> atmdetails = getAtmDetails(argument);
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
         setEnableBtnStatus(atmdetails);
         String sendingString = "##CMD,ENABLE," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "localhost:8080/ezcashATMserver/webMsg/");
+        sendmsg(sendingString,"http://"+server+":"+port+"/"+name+"/webMsg/");
         String postData = sendingString;
-        URL url = new URL("localhost:8080/ezcashATMserver/webMsg/");
+        URL url = new URL("http://"+server+":"+port+"/"+name+"/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
@@ -243,15 +250,21 @@ public class AtmController {
     }
     
     @RequestMapping(value = "/unlockatm/{atmName}", method = RequestMethod.GET)
-    public String handlePost1(@PathVariable("atmName") String argument, @RequestParam String action, Model m)
+    public String handlePost1(@PathVariable("atmName") String argument, @RequestParam String action, Model m, ServerInfo serverinfo )
             throws IOException {
+        String server = serverinfo.getServer();
+        String port = serverinfo.getPort();
+        String name = serverinfo.getName();
+        System.out.println("Server Server : "+serverinfo.getServer());
+        System.out.println("Server Port : "+serverinfo.getPort());
+        System.out.println("Server Name : "+serverinfo.getName());
         List<Atm> atmdetails = getAtmDetails(argument);
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
         String sendingString = "##CMD,UNLOCK," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "localhost:8080/ezcashATMserver/webMsg/");
+        sendmsg(sendingString,"http://"+server+":"+port+"/"+name+"/webMsg/");
         String postData = sendingString;
-        URL url = new URL("localhost:8080/ezcashATMserver/webMsg/");
+        URL url = new URL("http://"+server+":"+port+"/"+name+"/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
@@ -267,15 +280,18 @@ public class AtmController {
     }
 
     @RequestMapping(value = "/rebootatm/{atmName}", method = RequestMethod.GET)
-    public String handlePost2(@PathVariable("atmName") String argument, @RequestParam String action, Model m)
+    public String handlePost2(@PathVariable("atmName") String argument, @RequestParam String action, Model m,ServerInfo serverinfo )
             throws IOException {
+        String server = serverinfo.getServer();
+        String port = serverinfo.getPort();
+        String name = serverinfo.getName();
         List<Atm> atmdetails = getAtmDetails(argument);
         String AtmSerialNo = atmdetails.get(0).getSerialNo();
         String sendingString = "##CMD,REBOOT," + AtmSerialNo;
         System.out.println("Sending String:" + sendingString);
-        sendmsg(sendingString, "localhost:8080/ezcashATMserver/webMsg/");
+        sendmsg(sendingString,"http://"+server+":"+port+"/"+name+"/webMsg/");
         String postData = sendingString;
-        URL url = new URL("localhost:8080/ezcashATMserver/webMsg/");
+        URL url = new URL("http://"+server+":"+port+"/"+name+"/webMsg/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
