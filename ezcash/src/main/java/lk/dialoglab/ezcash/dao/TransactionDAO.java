@@ -17,10 +17,12 @@ import lk.dialoglab.ezcash.domain.Transactions;
 public interface TransactionDAO extends GenericDAO<Transactions, Integer> {
 
     public List<Transactions> getFilteredTrans(Date fromDate, Date toDate);
+    public List<Transactions> getFilteredTransbyAtm(Date fromDate, Date toDate,String atmName);
     
     public List<Transactions> getFilteredReloads(Date fromDate, Date toDate);
+    public List<Transactions> getFilteredReloadsbyAtm(Date fromDate, Date toDate,String atmName);
 
-    public List<Transactions> getTransactions();
+    public List<Transactions> getTransactionsCompleted();
 
     public List<Transactions> getReloads();
 

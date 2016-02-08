@@ -136,9 +136,9 @@ public class CashOut implements java.io.Serializable {
         this.responseId = responseId;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cashOut")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cashOut")
     public Set<Transactions> getTransactionses() {
-        System.out.println("14 "+System.currentTimeMillis());
+        System.out.println("14 transactionses"+System.currentTimeMillis());
         return this.transactionses;
     }
 

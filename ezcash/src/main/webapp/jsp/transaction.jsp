@@ -42,7 +42,7 @@ $(function() {
 
 	<div>
 		<h3 style="margin-left: 2px; font-family: Palatino Linotype;">Transactions</h3>
-		<form:form action="getdates" method="post">
+		<form:form action="getdatescashout" method="post">
 
 			<table class="tablesorter">
 
@@ -50,14 +50,20 @@ $(function() {
 				<tr>
 
 					<td>Start Date</td>
-					<td><input type="text" class="datetime" name="fromDate"></td>
+					<td><input type="text" class="datetime" name="fromDate" required></td>
 
 					<td>End Date</td>
-					<td><input type="text" class="datetime" name="toDate"></td>
-					<!--  
-				<td>Atm Name</td>
-				<td><input type="text" class="text"  name="atmName"></td>
-			-->
+					<td><input type="text" class="datetime" name="toDate" required></td>
+					 <td>Atm Name</td>
+				  
+				      <td><select name="atmName">
+							<option value="" label="............." />
+							<c:forEach var="at" items="${atmdrpdwnlist}">
+								<option>${at}</option>
+							</c:forEach>
+					</select></td>
+		
+		
 					<td><input type="submit" value="Filter Transactions">
 					</td>
 				</tr>
@@ -68,7 +74,8 @@ $(function() {
 		<table class="tablesorter">
 			<thead>
 				<tr>
-				<th>Task</th>
+					<th>Task</th>
+					<th>CashOutID</th>
 					<th>ATM Name</th>
 					<th>Transaction Time</th>
 					<th>Transaction Amount</th>
@@ -82,6 +89,7 @@ $(function() {
 					<tr>
 					<td><a href="<c:url value='/removeTransaction/${cashouts.cashOutId}' />"><img
 							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
+						<td>${cashouts.cashOutId}</td>
 						<td>${cashouts.atm.atmName}</td>
 						<td>${cashouts.cashOutDate}</td>
 						<td>${cashouts.amount}</td>
@@ -90,36 +98,44 @@ $(function() {
 				</c:forEach>
 			<tbody>
 		</table>
-
-		<table class="tablesorter">
+		<h3 style="margin-left: 2px; font-family: Palatino Linotype;">Transactions Succeeded</h3>
+				<table class="tablesorter">
 			<thead>
 				<tr>
-				     <th>Task</th>
+			
+					<th>CashOutId</th>
 					<th>ATM Name</th>
-					<th>Created Time</th>
-					<th>End Time</th>
-					<th>Tray1 Amount</th>
-					<th>Tray2 Amount</th>
-					<th>Type</th>
+					<th>Transaction Time</th>
+					<th>Transaction Amount</th>
+					<th>Status</th>
+					<th>T1</th>
+					<th>T2</th>
+					<th>R1</th>
+					<th>R2</th>
 
 
 				</tr>
 			<thead>
 			<tbody>
-				<c:forEach var="reloads" items="${reloads}">
+				<c:forEach var="cashouts" items="${TransactionsComp}">
 					<tr>
-					<td><a href="<c:url value='/removeTransaction/${reloads.transactionId}' />"><img
-							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
-						<td>${reloads.atmReload.atm.atmName}</td>
-						<td>${reloads.atmReload.taskCreatedTime}</td>
-						<td>${reloads.atmReload.reloadEndTime}</td>
-						<td>${reloads.tray1}</td>
-						<td>${reloads.tray2}</td>
-						<td>${reloads.atmReload.transactionStatus.statusName}</td>
+
+						<td>${cashouts.cashOut.cashOutId}</td>
+						<td>${cashouts.cashOut.atm.atmName}</td>
+						<td>${cashouts.cashOut.cashOutDate}</td>
+						<td>${cashouts.cashOut.amount}</td>
+						<td>${cashouts.cashOut.transactionStatus.statusName}</td>
+						<td>${cashouts.tray1}</td>
+						<td>${cashouts.tray2}</td>
+						<td>${cashouts.reject1}</td>
+						<td>${cashouts.reject2}</td>
 					</tr>
 				</c:forEach>
 			<tbody>
 		</table>
+		
+
+
 
 
 

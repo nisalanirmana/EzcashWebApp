@@ -18,6 +18,8 @@ public interface CashOutDAO extends GenericDAO<CashOut, Integer> {
 
     public List<CashOut> getFilteredCashOuts(Date fromDate, Date toDate);
     
+    public List<CashOut> getFilteredCashOutsbyAtm(Date fromDate, Date toDate,String atmName);
+    
     public List<CashOut> getCashOuts();
     
     public List<CashOut> getCashOutbyAtm(String atmname);

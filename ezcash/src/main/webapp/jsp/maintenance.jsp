@@ -68,8 +68,8 @@ $(function() {
 		<tbody>
 			<c:forEach var="d" items="${reloadtasks}">
 				<tr>
-					<td><a href="<c:url value='/removeReloadTask/${d.reloadId}' />"><img
-							src="<c:url value='/resources/img/delete.png'/>" /></a></td>
+					<td style = ${d.transactionStatus.statusName eq 'Reload Task Created' ? '':'visibility:hidden'}><a href="<c:url value='/removeReloadTask/${d.reloadId}' />"><img
+							src="<c:url value='/resources/img/delete.png' />" /></a></td>
 					<td>${d.reloadId}</td>
 					<td>${d.atm.atmName}</td>
 					<td>${d.operator.operatorName}</td>

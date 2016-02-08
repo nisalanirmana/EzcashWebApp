@@ -55,6 +55,20 @@
 						class="a ${sessionScope.MenuTab eq 'transaction'?'currentTab':'Tab'}"><span>Transaction</span></a>
 				</div>
 			</li>
+			
+			<li class="var_nav">
+				<div class="link_bg"></div>
+				<div class="link_title">
+					<div class=icon>
+						<img
+							src="<c:url value='/resources/img/menu_icon/transaction.png'/>" />
+					</div>
+					<spring:url value="/reload" var="reloadUrl"
+						htmlEscape="true" />
+					<a href="${reloadUrl}"
+						class="a ${sessionScope.MenuTab eq 'reload'?'currentTab':'Tab'}"><span>Reload</span></a>
+				</div>
+			</li>
 
 			<li class="var_nav">
 				<div class="link_bg"></div>

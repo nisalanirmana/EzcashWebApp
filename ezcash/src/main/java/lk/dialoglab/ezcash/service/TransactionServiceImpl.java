@@ -2,9 +2,12 @@ package lk.dialoglab.ezcash.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private CashOutDAO cashoutDao;
 
+   
     public List<CashOut> getCashOuts() {
         List<CashOut> cashouts = null;
         try {
@@ -43,6 +47,56 @@ public class TransactionServiceImpl implements TransactionService {
 
     }
     
+    
+
+    public List<Transactions> getTransactionsCompleted() {
+        List<Transactions> transactions = null;
+        try {
+            HibernateUtil.beginTransaction();
+           
+            transactions = transactionDao.getTransactionsCompleted();
+
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return transactions;
+
+    }
+    
+    
+    /*
+    public List<Transactions> getTransactionsCompleted() {
+        List<Transactions> cashouts =new ArrayList<Transactions>();
+        Set<Transactions> transactionses =null;
+        CashOut cashout = new CashOut();
+        try {
+            HibernateUtil.beginTransaction();
+           
+          //  cashouts = cashoutDao.getCashOuts();
+            transactionses =cashout.getTransactionses();
+            System.out.println("sadassssssssssssssssssssssssssssssssssssssssss");
+            System.out.println("size" +transactionses.size());
+            cashouts.addAll(transactionses);
+            System.out.println("size" +cashouts.size());
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+        
+        return cashouts;
+
+    }
+    */
+
+
+   
     public List<CashOut> getCashOutbyAtm(String atmname){
         System.out.println("getCashOutbyAtm(String atmname)");
         List<CashOut> cashoutsatm = null;
@@ -125,6 +179,61 @@ public class TransactionServiceImpl implements TransactionService {
         return cashouts;
 
     }
+    public List<CashOut> getFilteredCashOutsbyAtm(Date fromDate, Date toDate,String atmName){
+        List<CashOut> cashouts = null;
+
+        try {
+            HibernateUtil.beginTransaction();
+
+            cashouts = cashoutDao.getFilteredCashOutsbyAtm(fromDate, toDate,atmName);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return cashouts;
+
+    }
+    
+    public List<Transactions> getFilteredTransactions(Date fromDate, Date toDate) {
+        List<Transactions> cashouts = null;
+
+        try {
+            HibernateUtil.beginTransaction();
+
+            cashouts = transactionDao.getFilteredTrans(fromDate, toDate);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return cashouts;
+
+    }
+    public List<Transactions> getFilteredTransactionsbyAtm(Date fromDate, Date toDate,String atmName){
+        List<Transactions> cashouts = null;
+
+        try {
+            HibernateUtil.beginTransaction();
+
+            cashouts = transactionDao.getFilteredTransbyAtm(fromDate, toDate,atmName);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return cashouts;
+
+    }
     
     public List<Transactions> getFilteredReloads(Date fromDate, Date toDate) {
         List<Transactions> reloads = null;
@@ -133,6 +242,25 @@ public class TransactionServiceImpl implements TransactionService {
             HibernateUtil.beginTransaction();
 
             reloads = transactionDao.getFilteredReloads(fromDate, toDate);
+
+            HibernateUtil.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            HibernateUtil.rollbackTransaction();
+
+        }
+
+        return reloads;
+
+    }
+    
+    public List<Transactions> getFilteredReloadsbyAtm(Date fromDate, Date toDate,String atmName)  {
+        List<Transactions> reloads = null;
+
+        try {
+            HibernateUtil.beginTransaction();
+
+            reloads = transactionDao.getFilteredReloadsbyAtm(fromDate, toDate, atmName);
 
             HibernateUtil.commitTransaction();
         } catch (Exception e) {

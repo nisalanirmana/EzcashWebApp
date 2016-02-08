@@ -30,6 +30,17 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         return transactions;
 
     }
+    public List<Transactions> getFilteredTransbyAtm(Date fromDate, Date toDate,String atmName){
+        String hql = "from Transactions t where t.cashOut.cashOutDate>:d1 and t.cashOut.cashOutDate<:d2 and t.cashOut.atm.atmName=:d3 order by t.cashOut.cashOutDate desc";
+        // String hql =
+        // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate).setParameter("d2", toDate).setParameter("d3", atmName);
+        System.out.println(" getFilteredTrans() Start ");
+        List<Transactions> transactions = findMany(query);
+        System.out.println(" getFilteredTrans() END ");
+        return transactions;
+
+    }
     
     public List<Transactions> getFilteredReloads(Date fromDate, Date toDate) {
         String hql = "from Transactions t where t.atmReload.reloadEndTime>:d1 and t.atmReload.reloadEndTime<:d2 order by t.atmReload.reloadEndTime desc";
@@ -37,6 +48,19 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
         Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate)
                 .setParameter("d2", toDate);
+        System.out.println(" getFilteredReloads() Start ");
+        List<Transactions> reloads = findMany(query);
+        System.out.println(" getFilteredReloads() END ");
+        return reloads;
+
+    }
+    
+    public List<Transactions> getFilteredReloadsbyAtm(Date fromDate, Date toDate,String atmName) {
+        String hql = "from Transactions t where t.atmReload.reloadEndTime>:d1 and t.atmReload.reloadEndTime<:d2 and t.atmReload.atm.atmName=:d3 order by t.atmReload.reloadEndTime desc";
+        // String hql =
+        // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate)
+                .setParameter("d2", toDate).setParameter("d3", atmName);
         System.out.println(" getFilteredReloads() Start ");
         List<Transactions> reloads = findMany(query);
         System.out.println(" getFilteredReloads() END ");
@@ -55,7 +79,7 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
      * }
      */
 
-    public List<Transactions> getTransactions() {
+    public List<Transactions> getTransactionsCompleted() {
         String hql = "from Transactions t order by t.cashOut.cashOutDate desc";
         Query query = HibernateUtil.getSession().createQuery(hql);
 
@@ -65,7 +89,8 @@ public class TransactionDAOImpl extends GenericDAOImpl<Transactions, Integer> im
         return transactions;
 
     }
-    
+   
+
 
     // reload
 

@@ -31,7 +31,19 @@ public class CashOutDAOImpl extends GenericDAOImpl<CashOut, Integer> implements 
 
     }
     
+    public List<CashOut> getFilteredCashOutsbyAtm(Date fromDate, Date toDate,String atmName) {
+        String hql = "from CashOut t where t.cashOutDate>:d1 and t.cashOutDate<:d2 and t.atm.atmName=:d3 order by t.cashOutDate desc";
+        // String hql =
+        // "from Event e where e.eventtime between d1 and d2+1 order by e.eventtime desc";
+        Query query = HibernateUtil.getSession().createQuery(hql).setParameter("d1", fromDate).setParameter("d2", toDate).setParameter("d3", atmName);
+        System.out.println(" getFilteredCashOuts() Start ");
+        List<CashOut> cashout = findMany(query);
+        System.out.println(" getFilteredCashOuts() END ");
+        return cashout;
+
+    }
     
+   
     public List<CashOut> getCashOuts(){
         String hql = "from CashOut t order by t.cashOutDate desc";
         Query query = HibernateUtil.getSession().createQuery(hql);
@@ -41,6 +53,12 @@ public class CashOutDAOImpl extends GenericDAOImpl<CashOut, Integer> implements 
         return cashout;
 
     }
+    
+    
+  
+ 
+    
+
     
     public List<CashOut> getCashOutbyAtm(String atmname){
         System.out.println(" getCashOutsbyATM()Start ");
